@@ -10,40 +10,31 @@ public class OefScanner2 {
 		
 		if (calc.contains("+")) {
 			int s = calc.indexOf("+");
-			String a = calc.substring(0, s);
-			String b = calc.substring(s+1);
-			double aa = Double.parseDouble(a);
-			double bb = Double.parseDouble(b);
-			double c = aa+bb;
+			double a = Double.parseDouble(calc.substring(0, s));
+			double b = Double.parseDouble(calc.substring(s+1));
+			double c = a+b;
 			System.out.println(c);
 		}
 		else if (calc.contains("-")) {
 			int s = calc.indexOf("-");
-			String a = calc.substring(0, s);
-			String b = calc.substring(s+1);
-			double aa = Double.parseDouble(a);
-			double bb = Double.parseDouble(b);
-			double c = aa-bb;
+			double a = Double.parseDouble(calc.substring(0, s));
+			double b = Double.parseDouble(calc.substring(s+1));
+			double c = a-b;
 			System.out.println(c);
 		}
 		else if (calc.contains("*")) {
 			int s = calc.indexOf("*");
-			String a = calc.substring(0, s);
-			String b = calc.substring(s+1);
-			double aa = Double.parseDouble(a);
-			double bb = Double.parseDouble(b);
-			double c = aa*bb;
+			double a = Double.parseDouble(calc.substring(0, s));
+			double b = Double.parseDouble(calc.substring(s+1));
+			double c = a*b;
 			System.out.println(c);
 		}
 		else if (calc.contains("/")) {
 			int s = calc.indexOf("/");
-			String a = calc.substring(0, s);
-			String b = calc.substring(s+1);
-			double aa = Double.parseDouble(a);
-			double bb = Double.parseDouble(b);
-			double c = aa/bb;
+			double a = Double.parseDouble(calc.substring(0, s));
+			double b = Double.parseDouble(calc.substring(s+1));
+			double c = a/b;
 			System.out.println(c);
 		}
-
 	}
 }
