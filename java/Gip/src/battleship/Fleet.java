@@ -46,6 +46,18 @@ public class Fleet {
 		return false;
 	}
 
+	public void Bomber(int i, int j, List<Ship> S) {
+		for (Ship s : S) {
+
+			for (Coordinate c : s.coordinates) {
+				if (c.cellX == i && c.cellY == j) {
+					c.hit = true;
+				}
+			}
+		}
+
+	}
+
 	public void addPB(Coordinate start, Coordinate E1) {
 		Ship PB = new Ship();
 		PB.coordinates.add(start);

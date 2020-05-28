@@ -147,16 +147,5 @@ public class Board extends JPanel {
 	 * 
 	 * if (doRepaint) { repaint(); } } } } }
 	 */
-	private void BoatFinder(int i, int j, Fleet f) {
-		f.enemy;
-		if();
-		return true;
-	}
 
-	private void enemyFinder() {
-		Coordinate T = null;
-		T.cellX = Randomize.randomWithRange(0, 9);
-		T.cellY = Randomize.randomWithRange(0, 9);
-
-	}
 }
