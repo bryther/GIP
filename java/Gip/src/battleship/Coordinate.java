@@ -2,6 +2,13 @@ package battleship;
 
 import javax.swing.ImageIcon;
 
+/**
+ * This class describes the traits of every square on the grid, and its
+ * properties. It's also used to record the locations of the ships
+ * 
+ * @author Alec
+ *
+ */
 public class Coordinate {
 	public int cellX;
 	public int cellY;

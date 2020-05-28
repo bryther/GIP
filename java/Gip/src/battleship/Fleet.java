@@ -3,15 +3,19 @@ package battleship;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class keeps track of our own and the enemy's fleet. It has two lists
+ * keeping track of the ships, and various methods to keep track of each side's
+ * ships.
+ * 
+ * @author Alec
+ *
+ */
 public class Fleet {
 	List<Ship> ships = new ArrayList<Ship>();
 	List<Ship> enemy = new ArrayList<Ship>();
 
 	boolean[][] grid = new boolean[10][10];
-
-	public void addShip(Ship a) {
-		ships.add(a);
-	}
 
 	public void printer() {
 		for (int i = 0; i < grid.length; i++) {
@@ -29,7 +33,7 @@ public class Fleet {
 
 	}
 
-	public boolean scanner(int i, int j) {
+	private boolean scanner(int i, int j) {
 
 		for (Ship s : ships) {
 
@@ -58,6 +62,8 @@ public class Fleet {
 		SM.coordinates.add(E2);
 		ships.add(SM);
 	}
+	// adds our first 3-length ship (submarine) to the ship list of the fleet and
+	// adds the coordinates to the appropriate list
 
 	public void addDS(Coordinate start, Coordinate E1, Coordinate E2) {
 		Ship DS = new Ship();
@@ -66,6 +72,8 @@ public class Fleet {
 		DS.coordinates.add(E2);
 		ships.add(DS);
 	}
+	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
+	// adds the coordinates to the appropriate list
 
 	public void addBS(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3) {
 		Ship BS = new Ship();
@@ -75,6 +83,8 @@ public class Fleet {
 		BS.coordinates.add(E3);
 		ships.add(BS);
 	}
+	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
+	// the coordinates to the appropriate list
 
 	public void addACC(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3, Coordinate E4) {
 		Ship ACC = new Ship();
@@ -85,8 +95,10 @@ public class Fleet {
 		ACC.coordinates.add(E4);
 		ships.add(ACC);
 	}
+	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
+	// adds the coordinates to the appropriate list
 
-	public void SpawnPB() {
+	private void SpawnPB() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 
@@ -107,7 +119,7 @@ public class Fleet {
 
 	}
 
-	public void SpawnSM() {
+	private void SpawnSM() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -134,7 +146,7 @@ public class Fleet {
 
 	}
 
-	public void SpawnDS() {
+	private void SpawnDS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -160,7 +172,7 @@ public class Fleet {
 		enemy.add(EDS);
 	}
 
-	public void SpawnBS() {
+	private void SpawnBS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -193,7 +205,7 @@ public class Fleet {
 
 	}
 
-	public void SpawnACC() {
+	private void SpawnACC() {
 
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
@@ -234,7 +246,17 @@ public class Fleet {
 	}
 
 	public void SpawnFleet() {
+		SpawnACC();
+		SpawnBS();
+		SpawnDS();
+		SpawnSM();
+		SpawnPB();
 
 	}
-
+	// The Spawn methods are the randomized counterpart to the Add methods. It
+	// determines a random starting point and determines whether the ship will be
+	// placed horizontally or vertically. Then it determines the rest of the ships
+	// location based on these parameters. Finally it adds these to the correct
+	// list. The SpawnFleet method allows to generate the entire enemy fleet with
+	// one method.
 }
