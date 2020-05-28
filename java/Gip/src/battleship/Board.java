@@ -11,6 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.*;
 
+/**
+ * This class serves to set up the board, and to operate the game once it begins
+ * to run.
+ * 
+ * @author Alec
+ *
+ */
 public class Board extends JPanel {
 
 	private final int NUM_IMAGES = 4;
@@ -140,8 +147,16 @@ public class Board extends JPanel {
 	 * 
 	 * if (doRepaint) { repaint(); } } } } }
 	 */
-	private boolean BoatFinder(int i, int j) {
-		Ship.coordinatesCOM
-		return
+	private void BoatFinder(int i, int j, Fleet f) {
+		f.enemy;
+		if();
+		return true;
+	}
+
+	private void enemyFinder() {
+		Coordinate T = null;
+		T.cellX = Randomize.randomWithRange(0, 9);
+		T.cellY = Randomize.randomWithRange(0, 9);
+
 	}
 }
