@@ -2,7 +2,7 @@ package battleship;
 
 /**
  * this class serves as a personal alternative to the regular random class. it
- * returns an integer ranging from the given min to the given max.
+ * returns an integer in between the given parameters.
  * 
  * @author Alec
  *

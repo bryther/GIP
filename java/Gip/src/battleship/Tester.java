@@ -1,6 +1,14 @@
 package battleship;
 
 public class Tester {
+
+	/**
+	 * This class is a remnant of the production process, using it to test whether
+	 * or not my methods work. I've left all the things I've tested as commentary
+	 * for educational purposes.
+	 * 
+	 * @author Alec
+	 */
 	public static void main(String[] args) {
 		Fleet test = new Fleet();
 		/*

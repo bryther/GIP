@@ -46,6 +46,8 @@ public class Fleet {
 		return false;
 	}
 
+	// these two methods mainly served to register the ships on a grid and print
+	// them to the console.
 	public void Bomber(int i, int j, List<Ship> S) {
 		for (Ship s : S) {
 
@@ -58,10 +60,29 @@ public class Fleet {
 
 	}
 
+	public void sunk(List<Ship> S) {
+		int count = 0;
+		for (Ship s : S) {
+
+			for (Coordinate c : s.coordinates) {
+				if (c.hit == true) {
+					count++;
+				}
+			}
+			if (count == s.length) {
+				s.sunk = true;
+			}
+		}
+	}
+	// This method checks the entire list of ships for hits, and declares
+	// ships as sunk when the amount of hit coordinates matches the length of the
+	// ship.
+
 	public void addPB(Coordinate start, Coordinate E1) {
 		Ship PB = new Ship();
 		PB.coordinates.add(start);
 		PB.coordinates.add(E1);
+		PB.length = 2;
 		ships.add(PB);
 	}
 	// adds our smallest ship (patrol boat) to the ship list of the fleet and adds
@@ -73,6 +94,7 @@ public class Fleet {
 		SM.coordinates.add(E1);
 		SM.coordinates.add(E2);
 		ships.add(SM);
+		SM.length = 3;
 	}
 	// adds our first 3-length ship (submarine) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
@@ -82,6 +104,7 @@ public class Fleet {
 		DS.coordinates.add(start);
 		DS.coordinates.add(E1);
 		DS.coordinates.add(E2);
+		DS.length = 3;
 		ships.add(DS);
 	}
 	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
@@ -93,6 +116,7 @@ public class Fleet {
 		BS.coordinates.add(E1);
 		BS.coordinates.add(E2);
 		BS.coordinates.add(E3);
+		BS.length = 4;
 		ships.add(BS);
 	}
 	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
@@ -105,6 +129,7 @@ public class Fleet {
 		ACC.coordinates.add(E2);
 		ACC.coordinates.add(E3);
 		ACC.coordinates.add(E4);
+		ACC.length = 5;
 		ships.add(ACC);
 	}
 	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
