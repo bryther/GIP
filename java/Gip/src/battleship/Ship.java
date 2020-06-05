@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Ship {
 	List<Coordinate> coordinates = new ArrayList<Coordinate>();
+	String name;
 	boolean sunk = false;
 	int length;
 	// keeps track of a ships location by marking down the coordinates

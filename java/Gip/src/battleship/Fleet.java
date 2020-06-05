@@ -5,8 +5,8 @@ import java.util.List;
 
 /**
  * This class keeps track of our own and the enemy's fleet. It has two lists
- * keeping track of the ships, and various methods to keep track of each side's
- * ships.
+ * keeping track of the ships, and various methods to attack and keep track of
+ * each side's ships.
  * 
  * @author Alec
  *
@@ -54,6 +54,8 @@ public class Fleet {
 			for (Coordinate c : s.coordinates) {
 				if (c.cellX == i && c.cellY == j) {
 					c.hit = true;
+				} else {
+					c.vacant = true;
 				}
 			}
 		}
@@ -61,9 +63,8 @@ public class Fleet {
 	}
 
 	public void sunk(List<Ship> S) {
-		int count = 0;
 		for (Ship s : S) {
-
+			int count = 0;
 			for (Coordinate c : s.coordinates) {
 				if (c.hit == true) {
 					count++;
@@ -80,6 +81,7 @@ public class Fleet {
 
 	public void addPB(Coordinate start, Coordinate E1) {
 		Ship PB = new Ship();
+		PB.name = "Ally Patrol Boat";
 		PB.coordinates.add(start);
 		PB.coordinates.add(E1);
 		PB.length = 2;
@@ -90,6 +92,7 @@ public class Fleet {
 
 	public void addSM(Coordinate start, Coordinate E1, Coordinate E2) {
 		Ship SM = new Ship();
+		SM.name = "Ally Submarine";
 		SM.coordinates.add(start);
 		SM.coordinates.add(E1);
 		SM.coordinates.add(E2);
@@ -101,6 +104,7 @@ public class Fleet {
 
 	public void addDS(Coordinate start, Coordinate E1, Coordinate E2) {
 		Ship DS = new Ship();
+		DS.name = "Ally Destroyer";
 		DS.coordinates.add(start);
 		DS.coordinates.add(E1);
 		DS.coordinates.add(E2);
@@ -112,6 +116,7 @@ public class Fleet {
 
 	public void addBS(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3) {
 		Ship BS = new Ship();
+		BS.name = "Ally Battleship";
 		BS.coordinates.add(start);
 		BS.coordinates.add(E1);
 		BS.coordinates.add(E2);
@@ -124,6 +129,7 @@ public class Fleet {
 
 	public void addACC(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3, Coordinate E4) {
 		Ship ACC = new Ship();
+		ACC.name = "Ally Aircraft Carrier";
 		ACC.coordinates.add(start);
 		ACC.coordinates.add(E1);
 		ACC.coordinates.add(E2);
@@ -150,6 +156,7 @@ public class Fleet {
 			E1.cellY--;
 		}
 		Ship EPB = new Ship();
+		EPB.name = "Enemy Patrol boat";
 		EPB.coordinates.add(start);
 		EPB.coordinates.add(E1);
 		enemy.add(EPB);
@@ -176,6 +183,7 @@ public class Fleet {
 			E2.cellY = start.cellY - 2;
 		}
 		Ship ESM = new Ship();
+		ESM.name = "Enemy Submarine";
 		ESM.coordinates.add(start);
 		ESM.coordinates.add(E1);
 		ESM.coordinates.add(E2);
@@ -203,6 +211,7 @@ public class Fleet {
 			E2.cellY = start.cellY - 2;
 		}
 		Ship EDS = new Ship();
+		EDS.name = "Enemy Destroyer";
 		EDS.coordinates.add(start);
 		EDS.coordinates.add(E1);
 		EDS.coordinates.add(E2);
@@ -234,6 +243,7 @@ public class Fleet {
 			E3.cellY = start.cellY - 3;
 		}
 		Ship EBS = new Ship();
+		EBS.name = "Enemy Battleship";
 		EBS.coordinates.add(start);
 		EBS.coordinates.add(E1);
 		EBS.coordinates.add(E2);
@@ -273,6 +283,7 @@ public class Fleet {
 			E4.cellY = start.cellY - 4;
 		}
 		Ship EACC = new Ship();
+		EACC.name = "Enemy Aircraft Carrier";
 		EACC.coordinates.add(start);
 		EACC.coordinates.add(E1);
 		EACC.coordinates.add(E2);
