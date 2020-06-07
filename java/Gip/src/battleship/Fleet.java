@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Fleet {
 	List<Ship> ships = new ArrayList<Ship>();
-	List<Ship> enemy = new ArrayList<Ship>();
+	static List<Ship> enemy = new ArrayList<Ship>();
 
 	boolean[][] grid = new boolean[10][10];
 
@@ -79,69 +79,121 @@ public class Fleet {
 	// ships as sunk when the amount of hit coordinates matches the length of the
 	// ship.
 
-	public void addPB(Coordinate start, Coordinate E1) {
+	public void addPB(Coordinate start, Coordinate end) {
 		Ship PB = new Ship();
 		PB.name = "Ally Patrol Boat";
 		PB.coordinates.add(start);
-		PB.coordinates.add(E1);
+		PB.coordinates.add(end);
 		PB.length = 2;
 		ships.add(PB);
 	}
 	// adds our smallest ship (patrol boat) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addSM(Coordinate start, Coordinate E1, Coordinate E2) {
+	public void addSM(Coordinate start, Coordinate end) {
 		Ship SM = new Ship();
+		Coordinate E1 = null;
 		SM.name = "Ally Submarine";
+
+		if (start.cellX == end.cellX) {
+			E1.cellX = start.cellX;
+			E1.cellY = start.cellY + 1;
+
+		} else if (start.cellY == end.cellY) {
+			E1.cellY = start.cellY;
+			E1.cellX = start.cellX + 1;
+
+		}
 		SM.coordinates.add(start);
 		SM.coordinates.add(E1);
-		SM.coordinates.add(E2);
+		SM.coordinates.add(end);
 		ships.add(SM);
 		SM.length = 3;
 	}
 	// adds our first 3-length ship (submarine) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addDS(Coordinate start, Coordinate E1, Coordinate E2) {
+	public void addDS(Coordinate start, Coordinate end) {
 		Ship DS = new Ship();
+		Coordinate E1 = null;
 		DS.name = "Ally Destroyer";
+		if (start.cellX == end.cellX) {
+			E1.cellX = start.cellX;
+			E1.cellY = start.cellY + 1;
+
+		} else if (start.cellY == end.cellY) {
+			E1.cellY = start.cellY;
+			E1.cellX = start.cellX + 1;
+
+		}
 		DS.coordinates.add(start);
 		DS.coordinates.add(E1);
-		DS.coordinates.add(E2);
+		DS.coordinates.add(end);
 		DS.length = 3;
 		ships.add(DS);
 	}
 	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addBS(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3) {
+	public void addBS(Coordinate start, Coordinate end) {
 		Ship BS = new Ship();
+		Coordinate E1 = null;
+		Coordinate E2 = null;
 		BS.name = "Ally Battleship";
+		if (start.cellX == end.cellX) {
+			E1.cellX = start.cellX;
+			E1.cellY = start.cellY + 1;
+			E2.cellX = start.cellX;
+			E2.cellY = start.cellY + 2;
+
+		} else if (start.cellY == end.cellY) {
+			E1.cellY = start.cellY;
+			E1.cellX = start.cellX + 1;
+			E2.cellY = start.cellY;
+			E2.cellX = start.cellX + 2;
+
+		}
 		BS.coordinates.add(start);
 		BS.coordinates.add(E1);
 		BS.coordinates.add(E2);
-		BS.coordinates.add(E3);
+		BS.coordinates.add(end);
 		BS.length = 4;
 		ships.add(BS);
 	}
 	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addACC(Coordinate start, Coordinate E1, Coordinate E2, Coordinate E3, Coordinate E4) {
+	public void addACC(Coordinate start, Coordinate end) {
 		Ship ACC = new Ship();
+		Coordinate E1 = null;
+		Coordinate E2 = null;
+		Coordinate E3 = null;
 		ACC.name = "Ally Aircraft Carrier";
+		if (start.cellX == end.cellX) {
+			E1.cellX = start.cellX;
+			E1.cellY = start.cellY + 1;
+			E2.cellX = start.cellX;
+			E2.cellY = start.cellY + 2;
+
+		} else if (start.cellY == end.cellY) {
+			E1.cellY = start.cellY;
+			E1.cellX = start.cellX + 1;
+			E2.cellY = start.cellY;
+			E2.cellX = start.cellX + 2;
+
+		}
 		ACC.coordinates.add(start);
 		ACC.coordinates.add(E1);
 		ACC.coordinates.add(E2);
 		ACC.coordinates.add(E3);
-		ACC.coordinates.add(E4);
+		ACC.coordinates.add(end);
 		ACC.length = 5;
 		ships.add(ACC);
 	}
 	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	private void SpawnPB() {
+	private static void SpawnPB() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 
@@ -163,7 +215,7 @@ public class Fleet {
 
 	}
 
-	private void SpawnSM() {
+	private static void SpawnSM() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -191,7 +243,7 @@ public class Fleet {
 
 	}
 
-	private void SpawnDS() {
+	private static void SpawnDS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -218,7 +270,7 @@ public class Fleet {
 		enemy.add(EDS);
 	}
 
-	private void SpawnBS() {
+	private static void SpawnBS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -252,7 +304,7 @@ public class Fleet {
 
 	}
 
-	private void SpawnACC() {
+	private static void SpawnACC() {
 
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
@@ -293,7 +345,7 @@ public class Fleet {
 
 	}
 
-	public void SpawnFleet() {
+	public static void SpawnFleet() {
 		SpawnACC();
 		SpawnBS();
 		SpawnDS();

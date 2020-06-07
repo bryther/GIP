@@ -16,7 +16,7 @@ public class Start extends JFrame {
 
 	public static void main(String[] args) {
 		Board game = new Board();
-		game.menu();
+		game.Menu(game);
 
 	}
 
