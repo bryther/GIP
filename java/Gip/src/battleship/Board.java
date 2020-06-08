@@ -97,15 +97,17 @@ public class Board extends JPanel {
 						if (hit) {
 							button.setBackground(Color.RED);
 						}
-						for (Ship s : enemyFleet.ships) {
-							for (Coordinate c : s.coordinates) {
-								if (c.cellX == button.x && c.cellY == button.y) {
-									button.setBackground(Color.GREEN);
-								}
-							}
-						}
 					}
 				});
+				
+				//kleur schepen in met groen
+				for (Ship s : enemyFleet.ships) {
+					for (Coordinate c : s.coordinates) {
+						if (c.cellX == button.x && c.cellY == button.y) {
+							button.setBackground(Color.GREEN);
+						}
+					}
+				}
 			}
 		}
 		frame.add(panel);
