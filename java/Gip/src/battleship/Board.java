@@ -83,17 +83,23 @@ public class Board extends JPanel {
 	// This draws the board for us.
 
 	private void GameStart() {
-		enemyFleet.spawnFleet();
+		enemyFleet.spawnFleet(Randomize.randomWithRange(0, 9), enemyFleet);
 		JFrame frame = new JFrame();
-		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT * 2);
+		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
 		JPanel panel = new JPanel();
-		GridLayout gridlayout = new GridLayout(10, 10);
-		panel.setLayout(gridlayout);
+		GridLayout master = new GridLayout(1, 3);
+		panel.setLayout(master);
+		GridLayout grid = new GridLayout(10, 10);
+		JPanel left = new JPanel();
+		JTextArea log = new JTextArea();
+		JPanel right = new JPanel();
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				CoordinateButton button = new CoordinateButton(i, j);
 				button.setBackground(Color.BLUE);
-				panel.add(button);
+				left.add(button);
+				right.add(button);
 				button.addActionListener(new ActionListener() {
 
 					@Override
@@ -104,18 +110,17 @@ public class Board extends JPanel {
 						}
 					}
 				});
-				
-				//kleur schepen in met groen
-				for (Ship s : enemyFleet.ships) {
-					for (Coordinate c : s.coordinates) {
-						if (c.cellX == button.x && c.cellY == button.y) {
-							button.setBackground(Color.GREEN);
-						}
-					}
-				}
+				/*
+				 * // kleur schepen in met groen for (Ship s : enemyFleet.ships) { for
+				 * (Coordinate c : s.coordinates) { if (c.cellX == button.x && c.cellY ==
+				 * button.y) { button.setBackground(Color.GREEN); } } }
+				 */
 			}
 		}
 		frame.add(panel);
+		panel.add(left);
+		panel.add(log);
+		panel.add(right);
 		frame.setVisible(true);
 	}
 

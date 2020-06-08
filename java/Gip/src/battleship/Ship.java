@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class Ship {
-	List<Coordinate> coordinates = new ArrayList<Coordinate>();
+	public List<Coordinate> coordinates = new ArrayList<Coordinate>();
 	String name;
 	boolean sunk = false;
 	int length;
