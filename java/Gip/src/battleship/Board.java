@@ -18,6 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import battleship.Coordinate;
+import battleship.CoordinateButton;
+import battleship.Fleet;
+import battleship.Ship;
+
 import java.util.*;
 
 /**
@@ -82,15 +87,15 @@ public class Board extends JPanel {
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT * 2);
 		JPanel panel = new JPanel();
-		GridLayout gridlayout = new GridLayout(10,10);
+		GridLayout gridlayout = new GridLayout(10, 10);
 		panel.setLayout(gridlayout);
-		for (int i = 0; i<10;i++) {
-			for (int j = 0; j<10;j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
 				CoordinateButton button = new CoordinateButton(i, j);
 				button.setBackground(Color.BLUE);
-				panel.add(button);	
+				panel.add(button);
 				button.addActionListener(new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						boolean hit = enemyFleet.bomber(button.x, button.y);
@@ -119,9 +124,7 @@ public class Board extends JPanel {
 		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		
-		
-		
+
 //		JTextArea PBS = new JTextArea(1, 2);
 //		JTextArea PBE = new JTextArea(1, 2);
 //		panel.add(PBS);

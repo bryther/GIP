@@ -9,17 +9,8 @@ import javax.swing.JPanel;
 
 public class Tester {
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(330, 330);
-		JPanel panel = new JPanel();
-		frame.add(panel);
-		JButton start = new JButton("start game");
-		panel.add(start);
-		start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-
-		});
+		Fleet enemy = new Fleet();
+		enemy.spawnFleet();
+		enemy.printer();
 	}
 }
