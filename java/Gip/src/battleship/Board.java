@@ -1,8 +1,10 @@
 package battleship;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,8 @@ import java.util.*;
  */
 public class Board extends JPanel {
 
+	Fleet enemyFleet = new Fleet();
+	Fleet myFleet = new Fleet();
 	private final int NUM_IMAGES = 4;
 	private final static int CELL_SIZE = 30;
 	// defines the size of each individual cell
@@ -74,12 +78,31 @@ public class Board extends JPanel {
 	// This draws the board for us.
 
 	private void GameStart() {
-		Fleet.SpawnFleet();
+		enemyFleet.spawnFleet();
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT * 2);
 		JPanel panel = new JPanel();
+		GridLayout gridlayout = new GridLayout(10,10);
+		panel.setLayout(gridlayout);
+		for (int i = 0; i<10;i++) {
+			for (int j = 0; j<10;j++) {
+				CoordinateButton button = new CoordinateButton(i, j);
+				button.setBackground(Color.BLUE);
+				panel.add(button);	
+				button.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						boolean hit = enemyFleet.bomber(button.x, button.y);
+						if (hit) {
+							button.setBackground(Color.RED);
+						}
+					}
+				});
+			}
+		}
 		frame.add(panel);
-
+		frame.setVisible(true);
 	}
 
 	private void Prelude() {
@@ -87,27 +110,30 @@ public class Board extends JPanel {
 		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		JTextArea PBS = new JTextArea(1, 2);
-		JTextArea PBE = new JTextArea(1, 2);
-		panel.add(PBS);
-		panel.add(PBE);
-		JTextArea SMS = new JTextArea(1, 2);
-		JTextArea SME = new JTextArea(1, 2);
-		panel.add(SMS);
-		panel.add(SME);
-		JTextArea DSS = new JTextArea(1, 2);
-		JTextArea DSE = new JTextArea(1, 2);
-		panel.add(DSS);
-		panel.add(DSE);
-		JTextArea BSS = new JTextArea(1, 2);
-		JTextArea BSE = new JTextArea(1, 2);
-		panel.add(BSS);
-		panel.add(BSE);
-		JTextArea ACCS = new JTextArea(1, 2);
-		JTextArea ACCE = new JTextArea(1, 2);
-		panel.add(ACCS);
-		panel.add(ACCE);
-		JButton commit = new JButton("Commit coordinates");
+		
+		
+		
+//		JTextArea PBS = new JTextArea(1, 2);
+//		JTextArea PBE = new JTextArea(1, 2);
+//		panel.add(PBS);
+//		panel.add(PBE);
+//		JTextArea SMS = new JTextArea(1, 2);
+//		JTextArea SME = new JTextArea(1, 2);
+//		panel.add(SMS);
+//		panel.add(SME);
+//		JTextArea DSS = new JTextArea(1, 2);
+//		JTextArea DSE = new JTextArea(1, 2);
+//		panel.add(DSS);
+//		panel.add(DSE);
+//		JTextArea BSS = new JTextArea(1, 2);
+//		JTextArea BSE = new JTextArea(1, 2);
+//		panel.add(BSS);
+//		panel.add(BSE);
+//		JTextArea ACCS = new JTextArea(1, 2);
+//		JTextArea ACCE = new JTextArea(1, 2);
+//		panel.add(ACCS);
+//		panel.add(ACCE);
+//		JButton commit = new JButton("Commit coordinates");
 		frame.setVisible(true);
 	}
 
@@ -120,7 +146,8 @@ public class Board extends JPanel {
 		panel.add(start);
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				a.Prelude();
+				a.GameStart();
+				frame.dispose();
 
 			}
 

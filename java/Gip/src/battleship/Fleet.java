@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Fleet {
 	List<Ship> ships = new ArrayList<Ship>();
-	static List<Ship> enemy = new ArrayList<Ship>();
+//	static List<Ship> enemy = new ArrayList<Ship>();
 
 	boolean[][] grid = new boolean[10][10];
 
@@ -48,18 +48,23 @@ public class Fleet {
 
 	// these two methods mainly served to register the ships on a grid and print
 	// them to the console.
-	public void Bomber(int i, int j, List<Ship> S) {
-		for (Ship s : S) {
+	public boolean bomber(int i, int j) {
+		System.out.println("Dropping bomb on " + i +":" + j);
+		for (Ship s : ships) {
 
 			for (Coordinate c : s.coordinates) {
 				if (c.cellX == i && c.cellY == j) {
 					c.hit = true;
+					System.out.println("HIT");
+					return true;
 				} else {
 					c.vacant = true;
+					System.out.println("MIS");
+					return false; 
 				}
 			}
 		}
-
+		return false;
 	}
 
 	public void sunk(List<Ship> S) {
@@ -193,7 +198,7 @@ public class Fleet {
 	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	private static void SpawnPB() {
+	private void SpawnPB() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 
@@ -211,11 +216,11 @@ public class Fleet {
 		EPB.name = "Enemy Patrol boat";
 		EPB.coordinates.add(start);
 		EPB.coordinates.add(E1);
-		enemy.add(EPB);
+		ships.add(EPB);
 
 	}
 
-	private static void SpawnSM() {
+	private void SpawnSM() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -239,11 +244,11 @@ public class Fleet {
 		ESM.coordinates.add(start);
 		ESM.coordinates.add(E1);
 		ESM.coordinates.add(E2);
-		enemy.add(ESM);
+		ships.add(ESM);
 
 	}
 
-	private static void SpawnDS() {
+	private void SpawnDS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -267,10 +272,10 @@ public class Fleet {
 		EDS.coordinates.add(start);
 		EDS.coordinates.add(E1);
 		EDS.coordinates.add(E2);
-		enemy.add(EDS);
+		ships.add(EDS);
 	}
 
-	private static void SpawnBS() {
+	private void SpawnBS() {
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
 		Coordinate E2 = start;
@@ -300,11 +305,11 @@ public class Fleet {
 		EBS.coordinates.add(E1);
 		EBS.coordinates.add(E2);
 		EBS.coordinates.add(E3);
-		enemy.add(EBS);
+		ships.add(EBS);
 
 	}
 
-	private static void SpawnACC() {
+	private void SpawnACC() {
 
 		Coordinate start = new Coordinate(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9));
 		Coordinate E1 = start;
@@ -341,17 +346,16 @@ public class Fleet {
 		EACC.coordinates.add(E2);
 		EACC.coordinates.add(E3);
 		EACC.coordinates.add(E4);
-		enemy.add(EACC);
+		ships.add(EACC);
 
 	}
 
-	public static void SpawnFleet() {
+	public void spawnFleet() {
 		SpawnACC();
 		SpawnBS();
 		SpawnDS();
 		SpawnSM();
 		SpawnPB();
-
 	}
 	// The Spawn methods are the randomized counterpart to the Add methods. It
 	// determines a random starting point and determines whether the ship will be
