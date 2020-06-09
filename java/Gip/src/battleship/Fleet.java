@@ -65,8 +65,9 @@ public class Fleet {
 		return false;
 	}
 
-	public String sunk(List<Ship> S) {
-		for (Ship s : S) {
+	public String sunk() {
+		int size = 0;
+		for (Ship s : ships) {
 			int count = 0;
 			for (Coordinate c : s.coordinates) {
 				if (c.hit == true) {
@@ -79,6 +80,20 @@ public class Fleet {
 			}
 		}
 		return "";
+	}
+
+	public boolean fleetSunk() {
+		int sunk = 0;
+		for (Ship s : ships) {
+			if (s.sunk) {
+				sunk++;
+			}
+		}
+		if (sunk == 5)
+			return true;
+		else {
+			return false;
+		}
 	}
 	// This method checks the entire list of ships for hits, and declares
 	// ships as sunk when the amount of hit coordinates matches the length of the
