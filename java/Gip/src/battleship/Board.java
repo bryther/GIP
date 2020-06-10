@@ -46,6 +46,7 @@ public class Board extends JPanel {
 	// the playing field is a grid, the value of each cell determines its content,
 	// whether it's blank, a ship, or a vacant field
 	private boolean inGame;
+	private List<CoordinateButton> buttonsonfieldlist = new ArrayList<CoordinateButton>();
 	// true when the game is running, false when it's not
 
 	private void GameStart() {
@@ -67,6 +68,7 @@ public class Board extends JPanel {
 				CoordinateButton button = new CoordinateButton(i, j);
 				button.setBackground(Color.BLUE);
 				field.add(button);
+				buttonsonfieldlist.add(button);
 				button.addActionListener(new ActionListener() {
 
 					@Override
@@ -105,6 +107,15 @@ public class Board extends JPanel {
 		panel.add(field);
 		panel.add(log);
 		frame.setVisible(true);
+	}
+	
+	public CoordinateButton findButtonAtCoordinates(int x, int y) {
+		for (CoordinateButton button : buttonsonfieldlist) {
+			if (button.x == x && button.y == y) {
+				return button;
+			}
+		}
+		return null;
 	}
 
 	private void Prelude() {
