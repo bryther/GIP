@@ -43,6 +43,8 @@ public class Board extends JPanel {
 	// defines the dimensions of the playing field
 	private final static int BOARD_WIDTH = N_COLS * CELL_SIZE;
 	private final static int BOARD_HEIGHT = N_ROWS * CELL_SIZE;
+	int shipCount = 0;
+	int fr = 0;
 	// the playing field is a grid, the value of each cell determines its content,
 	// whether it's blank, a ship, or a vacant field
 	private boolean inGame;
@@ -118,12 +120,62 @@ public class Board extends JPanel {
 		return null;
 	}
 
-	private void Prelude() {
+	private void Prelude(Board a) {
 		JFrame frame = new JFrame();
-		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		frame.setSize(BOARD_WIDTH * 2, BOARD_HEIGHT);
 		JPanel panel = new JPanel();
+		GridLayout master = new GridLayout(1, 2);
+		panel.setLayout(master);
+		GridLayout grid = new GridLayout(10, 10);
+		JPanel field = new JPanel();
+		field.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		JTextArea log = new JTextArea();
+		field.setLayout(grid);
+		Coordinate tempS = new Coordinate(0, 0);
+		Coordinate tempT = new Coordinate(0, 0);
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				CoordinateButton button = new CoordinateButton(i, j);
+				button.setBackground(Color.BLUE);
+				field.add(button);
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (fr == 1) {
+							tempT.cellX = button.x;
+							tempT.cellY = button.y;
+							button.setBackground(Color.BLACK);
+							if (shipCount == 0) {
+								myFleet.addACC(tempS, tempT);
+							} else if (shipCount == 1) {
+								myFleet.addBS(tempS, tempT);
+							} else if (shipCount == 2) {
+								myFleet.addDS(tempS, tempT);
+							} else if (shipCount == 3) {
+								myFleet.addSM(tempS, tempT);
+							} else if (shipCount == 4) {
+								myFleet.addPB(tempS, tempT);
+								a.GameStart();
+								frame.dispose();
+							}
+							shipCount++;
+							fr = 0;
+						} else {
+							tempS.cellX = button.x;
+							tempS.cellY = button.y;
+							button.setBackground(Color.BLACK);
+							fr = 1;
+						}
+					}
+
+				});
+
+			}
+		}
 		frame.add(panel);
+		panel.add(field);
+		panel.add(log);
 		frame.setVisible(true);
+
 	}
 
 	public void Menu(Board a) {
@@ -135,7 +187,7 @@ public class Board extends JPanel {
 		panel.add(start);
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				a.GameStart();
+				a.Prelude(a);
 				frame.dispose();
 
 			}
