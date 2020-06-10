@@ -118,6 +118,7 @@ public class Board extends JPanel {
 			}
 		}
 		return null;
+		
 	}
 
 	private void Prelude(Board a) {
