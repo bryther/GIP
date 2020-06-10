@@ -12,4 +12,5 @@ public class CoordinateButton extends JButton {
 		this.setText(x + ":" + y);
 		;
 	}
+
 }

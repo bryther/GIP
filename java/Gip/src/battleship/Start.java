@@ -1,9 +1,6 @@
 package battleship;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  * This class serves to run the game. Board gives us the tools we use here to
