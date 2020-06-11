@@ -19,19 +19,13 @@ public class Fleet {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 
-				if (scanner(i, j)) {
-					System.out.print("X ");
-				} else {
-					System.out.print("- ");
-				}
-
 			}
 			System.out.println();
 		}
 
 	}
 
-	private boolean scanner(int i, int j) {
+	public boolean scanner(int i, int j) {
 
 		for (Ship s : ships) {
 
@@ -53,39 +47,21 @@ public class Fleet {
 				if (c.cellX == i && c.cellY == j) {
 					c.hit = true;
 					return true;
-				} else {
-					return false;
 				}
+
 			}
 		}
 		return false;
 	}
 
-	public String sunk() {
-		int size = 0;
-		for (Ship s : ships) {
-			int count = 0;
-			for (Coordinate c : s.coordinates) {
-				if (c.hit == true) {
-					count++;
-				}
-			}
-			if (count == s.length) {
-				s.sunk = true;
-				return s.name + " has sunk \n";
-			}
-		}
-		return "";
-	}
-
-	public boolean fleetSunk() {
+	public boolean sunk() {
 		int sunk = 0;
 		for (Ship s : ships) {
 			if (s.sunk) {
 				sunk++;
 			}
 		}
-		if (sunk == 5)
+		if (sunk == ships.size())
 			return true;
 		else {
 			return false;

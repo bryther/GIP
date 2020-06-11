@@ -1,12 +1,12 @@
 package battleship;
 
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
-public class CoordinateButton extends JButton {
+public class CoordinateLabel extends JLabel {
 	public int x;
 	public int y;
 
-	public CoordinateButton(int x, int y) {
+	public CoordinateLabel(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.setText(x + ":" + y);

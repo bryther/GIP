@@ -1,6 +1,7 @@
 package battleship;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,6 +36,7 @@ public class Board extends JPanel {
 	int shipCount = 0;
 	boolean fr = false;
 	private List<CoordinateButton> buttonsonfieldlist = new ArrayList<CoordinateButton>();
+	private List<CoordinateLabel> squaresonfieldlist = new ArrayList<CoordinateLabel>();
 	// the playing field is a grid, the value of each cell determines its content,
 	// whether it's blank, a ship, or a vacant field
 	private boolean inGame;
@@ -49,19 +52,33 @@ public class Board extends JPanel {
 
 	}
 
-	private void GameStart() {
+	public CoordinateLabel findSquareAtCoordinates(int x, int y)
+
+	{
+		for (CoordinateLabel square : squaresonfieldlist) {
+			if (square.x == x && square.y == y) {
+				return square;
+			}
+		}
+		return null;
+	}
+
+	private void GameStart(Board a) {
 		inGame = true;
 		enemyFleet.spawnFleet(Randomize.randomWithRange(0, 9), enemyFleet);
 		JFrame frame = new JFrame();
-		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
+		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT);
 		JPanel panel = new JPanel();
 		GridLayout master = new GridLayout(1, 2);
 		panel.setLayout(master);
 		GridLayout grid = new GridLayout(10, 10);
-		JPanel field = new JPanel();
-		field.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		JPanel field1 = new JPanel();
+		field1.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		JPanel field2 = new JPanel();
+		field2.setLayout(grid);
+		field2.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		JTextArea log = new JTextArea();
-		field.setLayout(grid);
+		field1.setLayout(grid);
 		JScrollPane scroll = new JScrollPane(log);
 		;
 
@@ -69,7 +86,7 @@ public class Board extends JPanel {
 			for (int j = 0; j < 10; j++) {
 				CoordinateButton button = new CoordinateButton(i, j);
 				button.setBackground(Color.BLUE);
-				field.add(button);
+				field1.add(button);
 				buttonsonfieldlist.add(button);
 				button.addActionListener(new ActionListener() {
 
@@ -78,8 +95,7 @@ public class Board extends JPanel {
 						if (enemyFleet.bomber(button.x, button.y)) {
 							button.setBackground(Color.RED);
 							log.append("struck " + button.x + "." + button.y + "; enemy ship hit! \n");
-							log.append(enemyFleet.sunk());
-							if (enemyFleet.fleetSunk()) {
+							if (enemyFleet.sunk()) {
 								inGame = false;
 							}
 
@@ -88,14 +104,17 @@ public class Board extends JPanel {
 
 							button.setBackground(Color.WHITE);
 						}
-						if (myFleet.bomber(Randomize.randomWithRange(0, 9), Randomize.randomWithRange(0, 9))) {
-							log.append("enemy struck " + button.x + "." + button.y + "; ally ship hit! \n");
-							log.append(myFleet.sunk());
-							if (myFleet.fleetSunk()) {
+						int enemyX = Randomize.randomWithRange(0, 9);
+						int enemyY = Randomize.randomWithRange(0, 9);
+						if (myFleet.bomber(enemyX, enemyY)) {
+							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.RED);
+							log.append("enemy struck " + enemyX + "." + enemyY + "; ally ship hit! \n");
+							if (myFleet.sunk()) {
 								inGame = false;
 							}
 						} else {
 							log.append("enemy struck " + button.x + "." + button.y + "; missed. \n");
+							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.WHITE);
 						}
 					}
 				});
@@ -106,9 +125,25 @@ public class Board extends JPanel {
 				 */
 			}
 		}
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				CoordinateLabel square = new CoordinateLabel(i, j);
+				square.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+				square.setBackground(Color.BLUE);
+				if (myFleet.scanner(square.x, square.y)) {
+					square.setBackground(Color.BLACK);
+				}
+				square.setOpaque(true);
+				field2.add(square);
+				squaresonfieldlist.add(square);
+			}
+
+		}
 		frame.add(panel);
-		panel.add(field);
-		panel.add(log);
+		scroll.setViewportView(log);
+		panel.add(field1);
+		panel.add(scroll);
+		panel.add(field2);
 		log.setEditable(false);
 		frame.setVisible(true);
 	}
@@ -222,7 +257,7 @@ public class Board extends JPanel {
 
 							} else if (shipCount == 4) {
 								myFleet.addPB(tempS, tempT, myFleet);
-								a.GameStart();
+								a.GameStart(a);
 								frame.dispose();
 
 							}

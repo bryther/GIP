@@ -17,4 +17,18 @@ public class Ship {
 	boolean sunk = false;
 	int length;
 	// keeps track of a ships location by marking down the coordinates
+
+	public String sunk(Ship s) {
+		int count = 0;
+		for (Coordinate c : s.coordinates) {
+			if (c.hit == true) {
+				count++;
+			}
+			if (count == s.length) {
+				s.sunk = true;
+				return s.name + " has sunk \n";
+			}
+		}
+		return "";
+	}
 }
