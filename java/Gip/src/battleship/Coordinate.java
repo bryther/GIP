@@ -1,7 +1,5 @@
 package battleship;
 
-import javax.swing.ImageIcon;
-
 /**
  * This class describes the traits of every square on the grid. It's also used
  * to record the locations of the ships
