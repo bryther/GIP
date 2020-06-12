@@ -68,6 +68,7 @@ public class Board extends JPanel {
 		enemyFleet.spawnFleet(Randomize.randomWithRange(0, 9), enemyFleet);
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT);
+		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		GridLayout master = new GridLayout(1, 2);
 		panel.setLayout(master);
@@ -151,6 +152,7 @@ public class Board extends JPanel {
 	private void Prelude(Board a) {
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
+		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		GridLayout master = new GridLayout(1, 2);
 		panel.setLayout(master);
@@ -174,7 +176,7 @@ public class Board extends JPanel {
 							tempT.cellY = button.y;
 							button.setBackground(Color.BLACK);
 							if (shipCount == 0) {
-								myFleet.addACC(tempS, tempT, myFleet);
+								myFleet.addACC(tempS, tempT);
 								log.append("Ally Carrier added (" + String.valueOf(tempS.cellX) + "."
 										+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
 										+ String.valueOf(tempT.cellY) + ")\n");
@@ -200,7 +202,7 @@ public class Board extends JPanel {
 								}
 
 							} else if (shipCount == 1) {
-								myFleet.addBS(tempS, tempT, myFleet);
+								myFleet.addBS(tempS, tempT);
 								log.append("Ally Battleship added (" + String.valueOf(tempS.cellX) + "."
 										+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
 										+ String.valueOf(tempT.cellY) + ")\n");
@@ -227,14 +229,14 @@ public class Board extends JPanel {
 
 							} else if (shipCount == 2 || shipCount == 3) {
 								if (shipCount == 2) {
-									myFleet.addDS(tempS, tempT, myFleet);
+									myFleet.addDS(tempS, tempT);
 									log.append("Ally Destroyer added (" + String.valueOf(tempS.cellX) + "."
 											+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
 											+ String.valueOf(tempT.cellY) + ")\n");
 									log.append("Add Ally Submarine \n");
 
 								} else {
-									myFleet.addACC(tempS, tempT, myFleet);
+									myFleet.addSM(tempS, tempT);
 									log.append("Ally Submarine added (" + String.valueOf(tempS.cellX) + "."
 											+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
 											+ String.valueOf(tempT.cellY) + ")\n");
@@ -256,7 +258,7 @@ public class Board extends JPanel {
 								}
 
 							} else if (shipCount == 4) {
-								myFleet.addPB(tempS, tempT, myFleet);
+								myFleet.addPB(tempS, tempT);
 								a.GameStart(a);
 								frame.dispose();
 
@@ -283,9 +285,19 @@ public class Board extends JPanel {
 
 	}
 
+	private void scoreBoard(Board a) {
+		JFrame frame = new JFrame();
+		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		frame.setLocationRelativeTo(null);
+		JPanel panel = new JPanel();
+		frame.add(panel);
+
+	}
+
 	public void Menu(Board a) {
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT / 4);
+		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frame.add(panel);
 		JButton start = new JButton("start game");
@@ -299,6 +311,14 @@ public class Board extends JPanel {
 
 		});
 		JButton score = new JButton("Score board");
+		score.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				a.scoreBoard(a);
+				frame.dispose();
+
+			}
+
+		});
 		panel.add(score);
 		score.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

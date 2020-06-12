@@ -71,18 +71,18 @@ public class Fleet {
 	// ships as sunk when the amount of hit coordinates matches the length of the
 	// ship.
 
-	public void addPB(Coordinate start, Coordinate end, Fleet a) {
+	public void addPB(Coordinate start, Coordinate end) {
 		Ship PB = new Ship();
 		PB.name = "Ally Patrol Boat";
 		PB.coordinates.add(start);
 		PB.coordinates.add(end);
 		PB.length = 2;
-		a.ships.add(PB);
+		ships.add(PB);
 	}
 	// adds our smallest ship (patrol boat) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addSM(Coordinate start, Coordinate end, Fleet a) {
+	public void addSM(Coordinate start, Coordinate end) {
 		Ship SM = new Ship();
 		Coordinate E1 = new Coordinate(0, 0);
 		SM.name = "Ally Submarine";
@@ -105,13 +105,13 @@ public class Fleet {
 		SM.coordinates.add(start);
 		SM.coordinates.add(E1);
 		SM.coordinates.add(end);
-		a.ships.add(SM);
+		ships.add(SM);
 		SM.length = 3;
 	}
 	// adds our first 3-length ship (submarine) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addDS(Coordinate start, Coordinate end, Fleet a) {
+	public void addDS(Coordinate start, Coordinate end) {
 		Ship DS = new Ship();
 		Coordinate E1 = new Coordinate(0, 0);
 		DS.name = "Ally Destroyer";
@@ -136,12 +136,12 @@ public class Fleet {
 		DS.coordinates.add(E1);
 		DS.coordinates.add(end);
 		DS.length = 3;
-		a.ships.add(DS);
+		ships.add(DS);
 	}
 	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addBS(Coordinate start, Coordinate end, Fleet a) {
+	public void addBS(Coordinate start, Coordinate end) {
 		Ship BS = new Ship();
 		Coordinate E1 = new Coordinate(0, 0);
 		Coordinate E2 = new Coordinate(0, 0);
@@ -175,13 +175,13 @@ public class Fleet {
 		BS.coordinates.add(E2);
 		BS.coordinates.add(end);
 		BS.length = 4;
-		a.ships.add(BS);
+		ships.add(BS);
 
 	}
 	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addACC(Coordinate start, Coordinate end, Fleet a) {
+	public void addACC(Coordinate start, Coordinate end) {
 		Ship ACC = new Ship();
 		Coordinate E1 = new Coordinate(0, 0);
 		Coordinate E2 = new Coordinate(0, 0);
@@ -225,7 +225,7 @@ public class Fleet {
 		ACC.coordinates.add(E3);
 		ACC.coordinates.add(end);
 		ACC.length = 5;
-		a.ships.add(ACC);
+		ships.add(ACC);
 	}
 	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
