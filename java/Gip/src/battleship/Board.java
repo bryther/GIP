@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -44,7 +45,6 @@ public class Board extends JPanel {
 	public int enemyScore = 0;
 	public int roundsPassed = 0;
 	public String playerName;
-	public String status;
 	// true when the game is running, false when it's not
 
 	public CoordinateButton findButtonAtCoordinates(int x, int y) {
@@ -104,8 +104,7 @@ public class Board extends JPanel {
 							myScore++;
 							if (enemyFleet.sunk()) {
 								inGame = false;
-								status = "won";
-								SqlConnect.saveScore(playerName, myScore, enemyScore, status);
+								SqlConnect.saveScore(playerName, myScore, enemyScore, "won");
 							}
 
 						} else {
@@ -122,8 +121,7 @@ public class Board extends JPanel {
 							enemyScore++;
 							if (myFleet.sunk()) {
 								inGame = false;
-								status = "lost";
-								SqlConnect.saveScore(playerName, myScore, enemyScore, status);
+								SqlConnect.saveScore(playerName, myScore, enemyScore, "lost");
 							}
 						} else {
 							log.append("enemy struck " + button.x + "." + button.y + "; missed. \n");
@@ -300,11 +298,13 @@ public class Board extends JPanel {
 
 	private void scoreBoard(Board a) {
 		JFrame frame = new JFrame();
-		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frame.add(panel);
-
+		JScrollPane score = new JScrollPane();
+		panel.add(score);
+		frame.setVisible(true);
 	}
 
 	public void Menu(Board a) {

@@ -10,6 +10,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+
 import java.util.Date;
 
 /**
@@ -34,15 +38,16 @@ public class SqlConnect {
 		}
 	}
 
-	public List<String> highScore() {
+	public static JList<String> highScore() {
 		PreparedStatement ps;
+		DefaultListModel<String> model = new DefaultListModel<>();
 		try {
 			ps = con.prepareStatement("SELECT * FROM HighScores");
 			ps.execute();
 			ResultSet resultset = ps.getResultSet();
-			List<String> resultlist = new ArrayList<String>();
+			JList<String> resultlist = new JList<>(model);
 			while (resultset.next()) {
-				resultlist.add(resultset.getString("vraag"));
+				resultlist.addElement(resultset.getString("vraag"));
 			}
 			return resultlist;
 		} catch (SQLException e) {
