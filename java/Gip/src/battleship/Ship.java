@@ -1,5 +1,6 @@
 package battleship;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Ship {
 	String name;
 	boolean sunk = false;
 	int length;
+	Color color;
 	// keeps track of a ships location by marking down the coordinates
 
 	public String sunk(Ship s) {

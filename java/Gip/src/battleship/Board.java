@@ -132,7 +132,7 @@ public class Board extends JPanel {
 				square.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 				square.setBackground(Color.BLUE);
 				if (myFleet.scanner(square.x, square.y)) {
-					square.setBackground(Color.BLACK);
+					square.setBackground(myFleet.painter(square.x, square.y));
 				}
 				square.setOpaque(true);
 				field2.add(square);
@@ -277,7 +277,7 @@ public class Board extends JPanel {
 
 			}
 		}
-		log.append("add ally Carrier");
+		log.append("add ally Carrier\n");
 		frame.add(panel);
 		panel.add(field);
 		panel.add(log);

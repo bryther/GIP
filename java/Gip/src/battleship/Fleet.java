@@ -1,5 +1,6 @@
 package battleship;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,17 @@ public class Fleet {
 		return false;
 	}
 
+	public Color painter(int i, int j) {
+		for (Ship s : ships) {
+			for (Coordinate c : s.coordinates) {
+				if (c.cellX == i && c.cellY == j) {
+					return s.color;
+				}
+			}
+		}
+		return null;
+	}
+
 	// these two methods mainly served to register the ships on a grid and print
 	// them to the console.
 	public boolean bomber(int i, int j) {
@@ -73,6 +85,7 @@ public class Fleet {
 
 	public void addPB(Coordinate start, Coordinate end) {
 		Ship PB = new Ship();
+		PB.color = Color.GRAY;
 		PB.name = "Ally Patrol Boat";
 		PB.coordinates.add(start);
 		PB.coordinates.add(end);
@@ -84,6 +97,7 @@ public class Fleet {
 
 	public void addSM(Coordinate start, Coordinate end) {
 		Ship SM = new Ship();
+		SM.color = Color.YELLOW;
 		Coordinate E1 = new Coordinate(0, 0);
 		SM.name = "Ally Submarine";
 		if (start.cellX == end.cellX + 2) {
@@ -113,6 +127,7 @@ public class Fleet {
 
 	public void addDS(Coordinate start, Coordinate end) {
 		Ship DS = new Ship();
+		DS.color = Color.MAGENTA;
 		Coordinate E1 = new Coordinate(0, 0);
 		DS.name = "Ally Destroyer";
 		if (start.cellX == end.cellX + 2) {
@@ -143,6 +158,7 @@ public class Fleet {
 
 	public void addBS(Coordinate start, Coordinate end) {
 		Ship BS = new Ship();
+		BS.color = Color.CYAN;
 		Coordinate E1 = new Coordinate(0, 0);
 		Coordinate E2 = new Coordinate(0, 0);
 		BS.name = "Ally Battleship";
@@ -183,6 +199,7 @@ public class Fleet {
 
 	public void addACC(Coordinate start, Coordinate end) {
 		Ship ACC = new Ship();
+		ACC.color = Color.GREEN;
 		Coordinate E1 = new Coordinate(0, 0);
 		Coordinate E2 = new Coordinate(0, 0);
 		Coordinate E3 = new Coordinate(0, 0);
