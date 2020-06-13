@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 /**
  * The class to connect my database, and manage the few functions it serves in
@@ -18,7 +21,9 @@ import java.util.List;
 
 public class SqlConnect {
 
-	public Connection con;
+	private static DateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	private static Date date = new Date();
+	public static Connection con;
 
 	public SqlConnect() {
 		try {
@@ -32,7 +37,7 @@ public class SqlConnect {
 	public List<String> highScore() {
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("SELECT player,Achieved,shotsLanded, MIN(enemyShotsLanded), Status");
+			ps = con.prepareStatement("SELECT * FROM HighScores");
 			ps.execute();
 			ResultSet resultset = ps.getResultSet();
 			List<String> resultlist = new ArrayList<String>();
@@ -46,35 +51,18 @@ public class SqlConnect {
 		return null;
 	}
 
-	public boolean retrieveFromDB(String antwoordGebruiker) {
-		PreparedStatement ps;
-		try {
-			ps = con.prepareStatement("SELECT * FROM oplossingen WHERE lower(oplossing) LIKE lower(?)");
-			ps.setString(1, antwoordGebruiker);
-			ps.execute();
-			ResultSet resultset = ps.getResultSet();
-			return resultset.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	List<String> retrieveLettersFromDB(int idvraag) {
+	public static void saveScore(String player, int myScore, int enemyScore, String status) {
 		PreparedStatement ps;
 		try {
 			ps = con.prepareStatement(
-					"SELECT DISTINCT substr(oplossing, 1, 1) as oplossingen FROM oplossingen WHERE FK = '1'");
+					"INSERT INTO HighScores (id, player, Achieved, shotsLanded, enemyShotsLanded, Status) VALUES "
+							+ "('" + player + "," + dateformat.format(date) + "," + myScore + "," + enemyScore + ","
+							+ status + "," + "')");
+
 			ps.execute();
-			ResultSet resultset = ps.getResultSet();
-			List<String> resultlist = new ArrayList<String>();
-			while (resultset.next()) {
-				resultlist.add(resultset.getString("oplossingen"));
-			}
-			return resultlist;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
+
 }

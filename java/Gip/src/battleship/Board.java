@@ -40,6 +40,11 @@ public class Board extends JPanel {
 	// the playing field is a grid, the value of each cell determines its content,
 	// whether it's blank, a ship, or a vacant field
 	private boolean inGame;
+	public int myScore = 0;
+	public int enemyScore = 0;
+	public int roundsPassed = 0;
+	public String playerName;
+	public String status;
 	// true when the game is running, false when it's not
 
 	public CoordinateButton findButtonAtCoordinates(int x, int y) {
@@ -96,8 +101,11 @@ public class Board extends JPanel {
 						if (enemyFleet.bomber(button.x, button.y)) {
 							button.setBackground(Color.RED);
 							log.append("struck " + button.x + "." + button.y + "; enemy ship hit! \n");
+							myScore++;
 							if (enemyFleet.sunk()) {
 								inGame = false;
+								status = "won";
+								SqlConnect.saveScore(playerName, myScore, enemyScore, status);
 							}
 
 						} else {
@@ -105,18 +113,23 @@ public class Board extends JPanel {
 
 							button.setBackground(Color.WHITE);
 						}
+
 						int enemyX = Randomize.randomWithRange(0, 9);
 						int enemyY = Randomize.randomWithRange(0, 9);
 						if (myFleet.bomber(enemyX, enemyY)) {
 							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.RED);
 							log.append("enemy struck " + enemyX + "." + enemyY + "; ally ship hit! \n");
+							enemyScore++;
 							if (myFleet.sunk()) {
 								inGame = false;
+								status = "lost";
+								SqlConnect.saveScore(playerName, myScore, enemyScore, status);
 							}
 						} else {
 							log.append("enemy struck " + button.x + "." + button.y + "; missed. \n");
 							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.WHITE);
 						}
+						roundsPassed++;
 					}
 				});
 				/*
