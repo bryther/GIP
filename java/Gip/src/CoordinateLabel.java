@@ -1,4 +1,4 @@
-package battleship;
+
 
 import javax.swing.JLabel;
 

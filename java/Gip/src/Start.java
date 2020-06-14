@@ -1,5 +1,3 @@
-package battleship;
-
 import javax.swing.JFrame;
 
 /**

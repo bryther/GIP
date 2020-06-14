@@ -1,4 +1,4 @@
-package battleship;
+
 
 public class Tester {
 	/*

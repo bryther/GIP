@@ -1,4 +1,4 @@
-package battleship;
+
 
 /**
  * this class serves as a personal alternative to the regular random class. it

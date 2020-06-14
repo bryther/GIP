@@ -1,5 +1,3 @@
-package battleship;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,7 +30,7 @@ public class SqlConnect {
 
 	public SqlConnect() {
 		try {
-			con = DriverManager.getConnection("jdbc:sqlite:/Gip/src/battleship.db");
+			con = DriverManager.getConnection("jdbc:sqlite:src/battleship.db");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error connecting to database");
@@ -41,7 +39,8 @@ public class SqlConnect {
 
 	public static DefaultTableModel highScore() {
 		PreparedStatement ps;
-		DefaultTableModel model = new DefaultTableModel(new String[] { "Class Name", "Home work", "Due Date" }, 0);
+		DefaultTableModel model = new DefaultTableModel(
+				new String[] { "Player", "Achieved", "Shots Landed", "Enemy Shots Landed", "Status" }, 0);
 		// DefaultListModel<String> model = new DefaultListModel<>();
 		try {
 			ps = con.prepareStatement("SELECT * FROM HighScores");

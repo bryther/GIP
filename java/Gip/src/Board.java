@@ -1,4 +1,3 @@
-package battleship;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -89,7 +88,7 @@ public class Board extends JPanel {
 		JTextArea log = new JTextArea();
 		field1.setLayout(grid);
 		JScrollPane scroll = new JScrollPane(log);
-		;
+		log.append(myFleet.printer(myFleet));
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -194,95 +193,27 @@ public class Board extends JPanel {
 							tempT.cellX = button.x;
 							tempT.cellY = button.y;
 							button.setBackground(Color.BLACK);
-							if (shipCount == 0) {
-								myFleet.addACC(tempS, tempT);
-								log.append("Ally Carrier added (" + String.valueOf(tempS.cellX) + "."
-										+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
-										+ String.valueOf(tempT.cellY) + ")\n");
-								log.append("Add Ally Battleship \n");
-								if (tempS.cellX - tempT.cellX > 0) {
-									for (int k = 1; k < 4; k++) {
-										a.findButtonAtCoordinates(button.x + k, button.y).setBackground(Color.BLACK);
-									}
-
-								} else if (tempS.cellX - tempT.cellX < 0) {
-									for (int k = 1; k < 4; k++) {
-										a.findButtonAtCoordinates(button.x - k, button.y).setBackground(Color.BLACK);
-									}
-								} else if (tempS.cellY - tempT.cellY > 0) {
-									for (int k = 1; k < 4; k++) {
-										a.findButtonAtCoordinates(button.x, button.y + k).setBackground(Color.BLACK);
-									}
-
-								} else if (tempS.cellY - tempT.cellY < 0) {
-									for (int k = 1; k < 4; k++) {
-										a.findButtonAtCoordinates(button.x, button.y - k).setBackground(Color.BLACK);
-									}
+							for (int k = 1; k <= button.squareFinder(tempS, tempT); k++) {
+								if (tempS.cellX == tempT.cellX && tempS.cellY < tempT.cellY) {
+									a.findButtonAtCoordinates(tempS.cellX, tempS.cellY + k).setBackground(Color.BLACK);
+								} else if (tempS.cellX == tempT.cellX && tempS.cellY > tempT.cellY) {
+									a.findButtonAtCoordinates(tempS.cellX, tempS.cellY - k).setBackground(Color.BLACK);
+								} else if (tempS.cellX < tempT.cellX && tempS.cellY == tempT.cellY) {
+									a.findButtonAtCoordinates(tempS.cellX + k, tempS.cellY).setBackground(Color.BLACK);
+								} else if (tempS.cellX > tempT.cellX && tempS.cellY == tempT.cellY) {
+									a.findButtonAtCoordinates(tempS.cellX - k, tempS.cellY).setBackground(Color.BLACK);
 								}
-
-							} else if (shipCount == 1) {
-								myFleet.addBS(tempS, tempT);
-								log.append("Ally Battleship added (" + String.valueOf(tempS.cellX) + "."
-										+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
-										+ String.valueOf(tempT.cellY) + ")\n");
-								log.append("Add Ally Destroyer \n");
-								if (tempS.cellX - tempT.cellX > 0) {
-									for (int k = 1; k < 3; k++) {
-										a.findButtonAtCoordinates(button.x + k, button.y).setBackground(Color.BLACK);
-									}
-
-								} else if (tempS.cellX - tempT.cellX < 0) {
-									for (int k = 1; k < 3; k++) {
-										a.findButtonAtCoordinates(button.x - k, button.y).setBackground(Color.BLACK);
-									}
-								} else if (tempS.cellY - tempT.cellY > 0) {
-									for (int k = 1; k < 3; k++) {
-										a.findButtonAtCoordinates(button.x, button.y + k).setBackground(Color.BLACK);
-									}
-
-								} else if (tempS.cellY - tempT.cellY < 0) {
-									for (int k = 1; k < 3; k++) {
-										a.findButtonAtCoordinates(button.x, button.y - k).setBackground(Color.BLACK);
-									}
-								}
-
-							} else if (shipCount == 2 || shipCount == 3) {
-								if (shipCount == 2) {
-									myFleet.addDS(tempS, tempT);
-									log.append("Ally Destroyer added (" + String.valueOf(tempS.cellX) + "."
-											+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
-											+ String.valueOf(tempT.cellY) + ")\n");
-									log.append("Add Ally Submarine \n");
-
-								} else {
-									myFleet.addSM(tempS, tempT);
-									log.append("Ally Submarine added (" + String.valueOf(tempS.cellX) + "."
-											+ String.valueOf(tempS.cellY) + ")/(" + String.valueOf(tempT.cellX) + "."
-											+ String.valueOf(tempT.cellY) + ")\n");
-									log.append("Add Ally Patrol Boat  \n");
-								}
-
-								if (tempS.cellX - tempT.cellX > 0) {
-									a.findButtonAtCoordinates(button.x + 1, button.y).setBackground(Color.BLACK);
-
-								} else if (tempS.cellX - tempT.cellX < 0) {
-									a.findButtonAtCoordinates(button.x - 1, button.y).setBackground(Color.BLACK);
-
-								} else if (tempS.cellY - tempT.cellY > 0) {
-									a.findButtonAtCoordinates(button.x, button.y + 1).setBackground(Color.BLACK);
-
-								} else if (tempS.cellY - tempT.cellY < 0) {
-									a.findButtonAtCoordinates(button.x, button.y - 1).setBackground(Color.BLACK);
-
-								}
-
-							} else if (shipCount == 4) {
-								myFleet.addPB(tempS, tempT);
-								a.GameStart(a);
-								frame.dispose();
 
 							}
-							shipCount++;
+							myFleet.addFleet(tempS, tempT, shipCount);
+							log.append("Ship added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX + "."
+									+ tempT.cellY + ")\n");
+							if (shipCount < 4) {
+								shipCount++;
+							} else {
+								a.GameStart(a);
+								frame.dispose();
+							}
 							fr = false;
 						}
 					}

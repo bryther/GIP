@@ -1,4 +1,4 @@
-package battleship;
+
 
 /**
  * This class describes the traits of every square on the grid. It's also used

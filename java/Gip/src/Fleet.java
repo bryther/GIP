@@ -1,4 +1,3 @@
-package battleship;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,18 +15,19 @@ public class Fleet {
 	public List<Ship> ships = new ArrayList<Ship>();
 	int[][] grid = new int[10][10];
 
-	public void printer(Fleet a) {
+	public String printer(Fleet a) {
+		String result = "";
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				if (a.scanner(i, j)) {
-					System.out.print("X ");
+					result = result + "X ";
 				} else {
-					System.out.print("0 ");
+					result = result + "O ";
 				}
 			}
-			System.out.println();
+			result = result + "\n";
 		}
-
+		return result;
 	}
 
 	public boolean scanner(int i, int j) {
@@ -87,7 +87,7 @@ public class Fleet {
 	// ships as sunk when the amount of hit coordinates matches the length of the
 	// ship.
 
-	public void addPB(Coordinate start, Coordinate end) {
+	private void addPB(Coordinate start, Coordinate end) {
 		Ship PB = new Ship();
 		PB.color = Color.GRAY;
 		PB.name = "Ally Patrol Boat";
@@ -99,7 +99,7 @@ public class Fleet {
 	// adds our smallest ship (patrol boat) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addSM(Coordinate start, Coordinate end) {
+	private void addSM(Coordinate start, Coordinate end) {
 		Ship SM = new Ship();
 		SM.color = Color.YELLOW;
 		Coordinate E1 = new Coordinate(0, 0);
@@ -115,7 +115,7 @@ public class Fleet {
 		} else if (start.cellX == end.cellX - 2) {
 			E1.cellX = start.cellY;
 			E1.cellY = start.cellX - 1;
-			
+
 		} else if (start.cellY == end.cellY - 2) {
 			E1.cellY = start.cellX;
 			E1.cellX = start.cellY - 1;
@@ -129,7 +129,7 @@ public class Fleet {
 	// adds our first 3-length ship (submarine) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addDS(Coordinate start, Coordinate end) {
+	private void addDS(Coordinate start, Coordinate end) {
 		Ship DS = new Ship();
 		DS.color = Color.MAGENTA;
 		Coordinate E1 = new Coordinate(0, 0);
@@ -160,7 +160,7 @@ public class Fleet {
 	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
 
-	public void addBS(Coordinate start, Coordinate end) {
+	private void addBS(Coordinate start, Coordinate end) {
 		Ship BS = new Ship();
 		BS.color = Color.CYAN;
 		Coordinate E1 = new Coordinate(0, 0);
@@ -201,7 +201,7 @@ public class Fleet {
 	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
 	// the coordinates to the appropriate list
 
-	public void addACC(Coordinate start, Coordinate end) {
+	private void addACC(Coordinate start, Coordinate end) {
 		Ship ACC = new Ship();
 		ACC.color = Color.GREEN;
 		Coordinate E1 = new Coordinate(0, 0);
@@ -250,6 +250,20 @@ public class Fleet {
 	}
 	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
 	// adds the coordinates to the appropriate list
+
+	public void addFleet(Coordinate start, Coordinate end, int a) {
+		if (a == 0) {
+			addACC(start, end);
+		} else if (a == 1) {
+			addBS(start, end);
+		} else if (a == 2) {
+			addDS(start, end);
+		} else if (a == 3) {
+			addSM(start, end);
+		} else if (a == 4) {
+			addPB(start, end);
+		}
+	}
 
 	public void spawnFleet(int level, Fleet a) {
 		Ship EACC = new Ship(), EBS = new Ship(), EDS = new Ship(), ESM = new Ship(), EPB = new Ship();

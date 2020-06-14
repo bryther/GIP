@@ -1,4 +1,4 @@
-package battleship;
+
 
 import java.awt.Color;
 import java.util.ArrayList;
