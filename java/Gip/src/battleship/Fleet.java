@@ -16,10 +16,14 @@ public class Fleet {
 	public List<Ship> ships = new ArrayList<Ship>();
 	int[][] grid = new int[10][10];
 
-	public void printer() {
+	public void printer(Fleet a) {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-
+				if (a.scanner(i, j)) {
+					System.out.print("X ");
+				} else {
+					System.out.print("0 ");
+				}
 			}
 			System.out.println();
 		}

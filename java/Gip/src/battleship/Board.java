@@ -299,6 +299,7 @@ public class Board extends JPanel {
 	}
 
 	private void scoreBoard(Board a) {
+		SqlConnect c = new SqlConnect();
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
 		frame.setLocationRelativeTo(null);
@@ -306,7 +307,7 @@ public class Board extends JPanel {
 		frame.add(panel);
 		JTable table = new JTable();
 		JScrollPane score = new JScrollPane(table);
-		table.setModel(SqlConnect.highScore());
+		table.setModel(c.highScore());
 		panel.add(score);
 		frame.setVisible(true);
 	}
