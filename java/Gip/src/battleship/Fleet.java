@@ -105,20 +105,20 @@ public class Fleet {
 		Coordinate E1 = new Coordinate(0, 0);
 		SM.name = "Ally Submarine";
 		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellX;
-			E1.cellY = start.cellY + 1;
+			E1.cellX = start.cellY;
+			E1.cellY = start.cellX + 1;
 
 		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellY;
-			E1.cellX = start.cellX + 1;
+			E1.cellY = start.cellX;
+			E1.cellX = start.cellY + 1;
 
 		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellX;
-			E1.cellY = start.cellY - 1;
-
+			E1.cellX = start.cellY;
+			E1.cellY = start.cellX - 1;
+			
 		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellY;
-			E1.cellX = start.cellX - 1;
+			E1.cellY = start.cellX;
+			E1.cellX = start.cellY - 1;
 		}
 		SM.coordinates.add(start);
 		SM.coordinates.add(E1);
@@ -135,20 +135,20 @@ public class Fleet {
 		Coordinate E1 = new Coordinate(0, 0);
 		DS.name = "Ally Destroyer";
 		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellX;
-			E1.cellY = start.cellY + 1;
+			E1.cellX = start.cellY;
+			E1.cellY = start.cellX + 1;
 
 		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellY;
-			E1.cellX = start.cellX + 1;
+			E1.cellY = start.cellX;
+			E1.cellX = start.cellY + 1;
 
 		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellX;
-			E1.cellY = start.cellY - 1;
+			E1.cellX = start.cellY;
+			E1.cellY = start.cellX - 1;
 
 		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellY;
-			E1.cellX = start.cellX - 1;
+			E1.cellY = start.cellX;
+			E1.cellX = start.cellY - 1;
 
 		}
 		DS.coordinates.add(start);
@@ -167,28 +167,28 @@ public class Fleet {
 		Coordinate E2 = new Coordinate(0, 0);
 		BS.name = "Ally Battleship";
 		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellX;
-			E2.cellX = start.cellX;
-			E1.cellY = start.cellY + 1;
-			E2.cellY = start.cellY + 2;
+			E1.cellX = start.cellY;
+			E2.cellX = start.cellY;
+			E1.cellY = start.cellX + 1;
+			E2.cellY = start.cellX + 2;
 
-		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellY;
-			E2.cellY = start.cellY;
-			E1.cellX = start.cellX + 1;
-			E2.cellX = start.cellX + 2;
+		} else if (start.cellY == end.cellY + 3) {
+			E1.cellY = start.cellX;
+			E2.cellY = start.cellX;
+			E1.cellX = start.cellY + 1;
+			E2.cellX = start.cellY + 2;
 
-		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellX;
-			E2.cellX = start.cellX;
-			E1.cellY = start.cellY - 1;
-			E2.cellY = start.cellY - 2;
+		} else if (start.cellX == end.cellX - 3) {
+			E1.cellX = start.cellY;
+			E2.cellX = start.cellY;
+			E1.cellY = start.cellX - 1;
+			E2.cellY = start.cellX - 2;
 
-		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellY;
-			E2.cellY = start.cellY;
-			E1.cellX = start.cellX - 1;
-			E2.cellX = start.cellX - 2;
+		} else if (start.cellY == end.cellY - 3) {
+			E1.cellY = start.cellX;
+			E2.cellY = start.cellX;
+			E1.cellX = start.cellY - 1;
+			E2.cellX = start.cellY - 2;
 		}
 		BS.coordinates.add(start);
 		BS.coordinates.add(E1);
@@ -208,37 +208,37 @@ public class Fleet {
 		Coordinate E2 = new Coordinate(0, 0);
 		Coordinate E3 = new Coordinate(0, 0);
 		ACC.name = "Ally Aircraft Carrier";
-		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellX;
-			E2.cellX = start.cellX;
-			E3.cellX = start.cellX;
-			E1.cellY = start.cellY + 1;
-			E2.cellY = start.cellY + 2;
-			E3.cellY = start.cellY + 3;
+		if (start.cellX == end.cellX + 4) {
+			E1.cellX = start.cellY;
+			E2.cellX = start.cellY;
+			E3.cellX = start.cellY;
+			E1.cellY = start.cellX + 1;
+			E2.cellY = start.cellX + 2;
+			E3.cellY = start.cellX + 3;
 
-		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellY;
-			E2.cellY = start.cellY;
-			E3.cellY = start.cellY;
-			E1.cellX = start.cellX + 1;
-			E2.cellX = start.cellX + 2;
-			E3.cellX = start.cellX + 3;
+		} else if (start.cellY == end.cellY + 4) {
+			E1.cellY = start.cellX;
+			E2.cellY = start.cellX;
+			E3.cellY = start.cellX;
+			E1.cellX = start.cellY + 1;
+			E2.cellX = start.cellY + 2;
+			E3.cellX = start.cellY + 3;
 
-		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellX;
-			E2.cellX = start.cellX;
-			E3.cellX = start.cellX;
-			E1.cellY = start.cellY - 1;
-			E2.cellY = start.cellY - 2;
-			E3.cellY = start.cellY - 3;
+		} else if (start.cellX == end.cellX - 4) {
+			E1.cellX = start.cellY;
+			E2.cellX = start.cellY;
+			E3.cellX = start.cellY;
+			E1.cellY = start.cellX - 1;
+			E2.cellY = start.cellX - 2;
+			E3.cellY = start.cellX - 3;
 
-		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellY;
-			E2.cellY = start.cellY;
-			E3.cellY = start.cellY;
-			E1.cellX = start.cellX - 1;
-			E2.cellX = start.cellX - 2;
-			E2.cellX = start.cellX - 3;
+		} else if (start.cellY == end.cellY - 4) {
+			E1.cellY = start.cellX;
+			E2.cellY = start.cellX;
+			E3.cellY = start.cellX;
+			E1.cellX = start.cellY - 1;
+			E2.cellX = start.cellY - 2;
+			E2.cellX = start.cellY - 3;
 		}
 		ACC.coordinates.add(start);
 		ACC.coordinates.add(E1);

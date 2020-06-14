@@ -68,7 +68,7 @@ public class SqlConnect {
 			ps = con.prepareStatement(
 					"INSERT INTO HighScores (id, player, Achieved, shotsLanded, enemyShotsLanded, Status) VALUES "
 							+ "('" + player + "," + dateformat.format(date) + "," + myScore + "," + enemyScore + ","
-							+ status + "," + "')");
+							+ status + "')");
 
 			ps.execute();
 		} catch (SQLException e) {

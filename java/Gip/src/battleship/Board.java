@@ -29,6 +29,7 @@ public class Board extends JPanel {
 
 	Fleet enemyFleet = new Fleet();
 	Fleet myFleet = new Fleet();
+	SqlConnect c = new SqlConnect();
 	private final static int CELL_SIZE = 30;
 	// defines the size of each individual cell
 	private final static int N_ROWS = 10;
@@ -184,7 +185,12 @@ public class Board extends JPanel {
 				buttonsonfieldlist.add(button);
 				button.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (fr) {
+						if (!fr) {
+							tempS.cellX = button.x;
+							tempS.cellY = button.y;
+							button.setBackground(Color.BLACK);
+							fr = true;
+						} else {
 							tempT.cellX = button.x;
 							tempT.cellY = button.y;
 							button.setBackground(Color.BLACK);
@@ -278,11 +284,6 @@ public class Board extends JPanel {
 							}
 							shipCount++;
 							fr = false;
-						} else {
-							tempS.cellX = button.x;
-							tempS.cellY = button.y;
-							button.setBackground(Color.BLACK);
-							fr = true;
 						}
 					}
 
@@ -299,7 +300,6 @@ public class Board extends JPanel {
 	}
 
 	private void scoreBoard(Board a) {
-		SqlConnect c = new SqlConnect();
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
 		frame.setLocationRelativeTo(null);
