@@ -29,6 +29,16 @@ public class Board extends JPanel {
 	Fleet enemyFleet = new Fleet();
 	Fleet myFleet = new Fleet();
 	SqlConnect c = new SqlConnect();
+	Ship AACC = new Ship("Ally Aircraft Carrier", 5, Color.GREEN);
+	Ship ABS = new Ship("Ally Battleship", 4, Color.CYAN);
+	Ship ADS = new Ship("Ally Destroyer", 3, Color.MAGENTA);
+	Ship ASM = new Ship("Ally Submarine", 3, Color.YELLOW);
+	Ship APB = new Ship("Ally Aircraft Carrier", 2, Color.ORANGE);
+	Ship EACC = new Ship("Enemy Aircraft Carrier", 5, Color.RED);
+	Ship EBS = new Ship("Enemy Battleship", 4, Color.RED);
+	Ship EDS = new Ship("Enemy Destroyer", 3, Color.RED);
+	Ship ESM = new Ship("Enemy Submarine", 3, Color.RED);
+	Ship EPB = new Ship("Enemy Patrol Boat", 2, Color.RED);
 	private final static int CELL_SIZE = 30;
 	// defines the size of each individual cell
 	private final static int N_ROWS = 10;
@@ -43,6 +53,7 @@ public class Board extends JPanel {
 	// the playing field is a grid, the value of each cell determines its content,
 	// whether it's blank, a ship, or a vacant field
 	private boolean inGame;
+	private boolean won;
 	public int myScore = 0;
 	public int enemyScore = 0;
 	public int roundsPassed = 0;
@@ -70,9 +81,48 @@ public class Board extends JPanel {
 		return null;
 	}
 
+	private void endScreen(Board a) {
+		JFrame frame = new JFrame();
+		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT / 2);
+		frame.setLocationRelativeTo(null);
+		JPanel panel = new JPanel();
+		GridLayout gameOver = new GridLayout(3, 1);
+		frame.add(panel);
+		panel.setLayout(gameOver);
+		JLabel label = new JLabel();
+		if (won) {
+			label.setText("Game Over. You won!");
+		} else {
+			label.setText("Game Over. You lost!");
+		}
+		JButton newGame = new JButton("New Game?");
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				a.Prelude(a);
+				frame.dispose();
+			}
+
+		});
+		frame.setVisible(true);
+		JButton scoreBoard = new JButton("Scoreboard");
+		scoreBoard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				a.scoreBoard(a);
+				frame.dispose();
+
+			}
+
+		});
+		panel.add(label);
+		panel.add(newGame);
+		panel.add(scoreBoard);
+		frame.setVisible(true);
+
+	}
+
 	private void GameStart(Board a) {
 		inGame = true;
-		enemyFleet.spawnFleet(Randomize.randomWithRange(0, 9), enemyFleet);
+		enemyFleet.spawnFleet(Randomize.randomWithRange(0, 9), EACC, EBS, EDS, ESM, EPB);
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 3, BOARD_HEIGHT);
 		frame.setLocationRelativeTo(null);
@@ -88,7 +138,7 @@ public class Board extends JPanel {
 		JTextArea log = new JTextArea();
 		field1.setLayout(grid);
 		JScrollPane scroll = new JScrollPane(log);
-		log.append(myFleet.printer(myFleet));
+		log.append(enemyFleet.printer(enemyFleet));
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -101,12 +151,31 @@ public class Board extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (enemyFleet.bomber(button.x, button.y)) {
+							enemyFleet.sinker();
 							button.setBackground(Color.RED);
 							log.append("struck " + button.x + "." + button.y + "; enemy ship hit! \n");
 							myScore++;
+							if (EACC.sunk) {
+								log.append(EACC.name + " has sunk.\n");
+							}
+							if (EBS.sunk) {
+								log.append(EBS.name + " has sunk.\n");
+							}
+							if (EDS.sunk) {
+								log.append(EDS.name + " has sunk.\n");
+							}
+							if (ESM.sunk) {
+								log.append(ESM.name + " has sunk.\n");
+							}
+							if (EPB.sunk) {
+								log.append(EPB.name + " has sunk.\n");
+							}
 							if (enemyFleet.sunk()) {
 								inGame = false;
 								SqlConnect.saveScore(playerName, myScore, enemyScore, "won");
+								won = true;
+								a.endScreen(a);
+								frame.dispose();
 							}
 
 						} else {
@@ -118,15 +187,35 @@ public class Board extends JPanel {
 						int enemyX = Randomize.randomWithRange(0, 9);
 						int enemyY = Randomize.randomWithRange(0, 9);
 						if (myFleet.bomber(enemyX, enemyY)) {
+							myFleet.sinker();
 							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.RED);
-							log.append("enemy struck " + enemyX + "." + enemyY + "; ally ship hit! \n");
 							enemyScore++;
+							log.append("Enemy struck " + enemyX + "." + enemyY + "; Ally ship hit! \n");
+
+							if (AACC.sunk) {
+								log.append(AACC.name + " has sunk.\n");
+							}
+							if (ABS.sunk) {
+								log.append(ABS.name + " has sunk.\n");
+							}
+							if (ADS.sunk) {
+								log.append(ADS.name + " has sunk.\n");
+							}
+							if (ASM.sunk) {
+								log.append(ASM.name + " has sunk.\n");
+							}
+							if (APB.sunk) {
+								log.append(APB.name + " has sunk.\n");
+							}
 							if (myFleet.sunk()) {
 								inGame = false;
-								SqlConnect.saveScore(playerName, myScore, enemyScore, "lost");
+								SqlConnect.saveScore(playerName, myScore, enemyScore, "Lost");
+								a.endScreen(a);
+								frame.dispose();
+
 							}
 						} else {
-							log.append("enemy struck " + button.x + "." + button.y + "; missed. \n");
+							log.append("enemy struck " + enemyX + "." + enemyY + "; missed. \n");
 							a.findSquareAtCoordinates(enemyX, enemyY).setBackground(Color.WHITE);
 						}
 						roundsPassed++;
@@ -163,6 +252,7 @@ public class Board extends JPanel {
 	}
 
 	private void Prelude(Board a) {
+		won = false;
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH * 4, BOARD_HEIGHT * 2);
 		frame.setLocationRelativeTo(null);
@@ -205,12 +295,38 @@ public class Board extends JPanel {
 								}
 
 							}
-							myFleet.addFleet(tempS, tempT, shipCount);
-							log.append("Ship added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX + "."
-									+ tempT.cellY + ")\n");
-							if (shipCount < 4) {
+							if (shipCount == 0) {
+								AACC.coordinateAdder(tempS, tempT, AACC);
+								myFleet.addShip(AACC);
+								log.append(AACC.name + "added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX
+										+ "." + tempT.cellY + ")\n");
+								log.append("Add battleship\n");
+								shipCount++;
+							} else if (shipCount == 1) {
+								ABS.coordinateAdder(tempS, tempT, ABS);
+								myFleet.addShip(ABS);
+								log.append(ABS.name + "added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX
+										+ "." + tempT.cellY + ")\n");
+								log.append("Add Destroyer\n");
+								shipCount++;
+							} else if (shipCount == 2) {
+								ADS.coordinateAdder(tempS, tempT, ADS);
+								myFleet.addShip(ADS);
+								log.append(ADS.name + "added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX
+										+ "." + tempT.cellY + ")\n");
+								log.append("Add Submarine\n");
+								shipCount++;
+
+							} else if (shipCount == 3) {
+								ASM.coordinateAdder(tempS, tempT, ASM);
+								myFleet.addShip(ASM);
+								log.append(ASM.name + "added (" + tempS.cellX + "." + tempS.cellY + "),(" + tempT.cellX
+										+ "." + tempT.cellY + ")\n");
+								log.append("Add Patrol Boat\n");
 								shipCount++;
 							} else {
+								APB.coordinateAdder(tempS, tempT, APB);
+								myFleet.addShip(APB);
 								a.GameStart(a);
 								frame.dispose();
 							}
@@ -243,6 +359,31 @@ public class Board extends JPanel {
 		frame.setVisible(true);
 	}
 
+	public void name(Board a) {
+		JFrame frame = new JFrame();
+		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT / 2);
+		frame.setLocationRelativeTo(null);
+		GridLayout name = new GridLayout(2, 1);
+		JPanel panel = new JPanel();
+		frame.add(panel);
+		panel.setLayout(name);
+		JTextArea text = new JTextArea();
+		text.setSize(BOARD_WIDTH - 1, BOARD_HEIGHT / 4);
+		panel.add(text);
+		JButton start = new JButton("start game");
+		panel.add(start);
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerName = text.getText();
+				a.Prelude(a);
+				frame.dispose();
+
+			}
+
+		});
+		frame.setVisible(true);
+	}
+
 	public void Menu(Board a) {
 		JFrame frame = new JFrame();
 		frame.setSize(BOARD_WIDTH, BOARD_HEIGHT / 4);
@@ -253,7 +394,7 @@ public class Board extends JPanel {
 		panel.add(start);
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				a.Prelude(a);
+				a.name(a);
 				frame.dispose();
 
 			}

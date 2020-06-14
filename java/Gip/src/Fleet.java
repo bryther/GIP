@@ -70,7 +70,36 @@ public class Fleet {
 		return false;
 	}
 
+	public void sinker() {
+		for (Ship s : ships) {
+			int hit = 0;
+			for (Coordinate c : s.coordinates) {
+				if (c.hit) {
+					hit++;
+				}
+			}
+			if (hit == s.length) {
+				s.sunk = true;
+			}
+		}
+	}
+
 	public boolean sunk() {
+		int sunk = 0;
+		for (Ship s : ships) {
+			if (s.sunk) {
+				sunk++;
+			}
+
+		}
+		if (sunk == ships.size())
+			return true;
+		else {
+			return false;
+		}
+	}
+
+	public boolean fleetSunk() {
 		int sunk = 0;
 		for (Ship s : ships) {
 			if (s.sunk) {
@@ -83,386 +112,99 @@ public class Fleet {
 			return false;
 		}
 	}
+
 	// This method checks the entire list of ships for hits, and declares
 	// ships as sunk when the amount of hit coordinates matches the length of the
 	// ship.
-
-	private void addPB(Coordinate start, Coordinate end) {
-		Ship PB = new Ship();
-		PB.color = Color.GRAY;
-		PB.name = "Ally Patrol Boat";
-		PB.coordinates.add(start);
-		PB.coordinates.add(end);
-		PB.length = 2;
-		ships.add(PB);
-	}
-	// adds our smallest ship (patrol boat) to the ship list of the fleet and adds
-	// the coordinates to the appropriate list
-
-	private void addSM(Coordinate start, Coordinate end) {
-		Ship SM = new Ship();
-		SM.color = Color.YELLOW;
-		Coordinate E1 = new Coordinate(0, 0);
-		SM.name = "Ally Submarine";
-		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellY;
-			E1.cellY = start.cellX + 1;
-
-		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellX;
-			E1.cellX = start.cellY + 1;
-
-		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellY;
-			E1.cellY = start.cellX - 1;
-
-		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellX;
-			E1.cellX = start.cellY - 1;
-		}
-		SM.coordinates.add(start);
-		SM.coordinates.add(E1);
-		SM.coordinates.add(end);
-		ships.add(SM);
-		SM.length = 3;
-	}
-	// adds our first 3-length ship (submarine) to the ship list of the fleet and
-	// adds the coordinates to the appropriate list
-
-	private void addDS(Coordinate start, Coordinate end) {
-		Ship DS = new Ship();
-		DS.color = Color.MAGENTA;
-		Coordinate E1 = new Coordinate(0, 0);
-		DS.name = "Ally Destroyer";
-		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellY;
-			E1.cellY = start.cellX + 1;
-
-		} else if (start.cellY == end.cellY + 2) {
-			E1.cellY = start.cellX;
-			E1.cellX = start.cellY + 1;
-
-		} else if (start.cellX == end.cellX - 2) {
-			E1.cellX = start.cellY;
-			E1.cellY = start.cellX - 1;
-
-		} else if (start.cellY == end.cellY - 2) {
-			E1.cellY = start.cellX;
-			E1.cellX = start.cellY - 1;
-
-		}
-		DS.coordinates.add(start);
-		DS.coordinates.add(E1);
-		DS.coordinates.add(end);
-		DS.length = 3;
-		ships.add(DS);
-	}
-	// adds our second 3-length ship (destroyer) to the ship list of the fleet and
-	// adds the coordinates to the appropriate list
-
-	private void addBS(Coordinate start, Coordinate end) {
-		Ship BS = new Ship();
-		BS.color = Color.CYAN;
-		Coordinate E1 = new Coordinate(0, 0);
-		Coordinate E2 = new Coordinate(0, 0);
-		BS.name = "Ally Battleship";
-		if (start.cellX == end.cellX + 2) {
-			E1.cellX = start.cellY;
-			E2.cellX = start.cellY;
-			E1.cellY = start.cellX + 1;
-			E2.cellY = start.cellX + 2;
-
-		} else if (start.cellY == end.cellY + 3) {
-			E1.cellY = start.cellX;
-			E2.cellY = start.cellX;
-			E1.cellX = start.cellY + 1;
-			E2.cellX = start.cellY + 2;
-
-		} else if (start.cellX == end.cellX - 3) {
-			E1.cellX = start.cellY;
-			E2.cellX = start.cellY;
-			E1.cellY = start.cellX - 1;
-			E2.cellY = start.cellX - 2;
-
-		} else if (start.cellY == end.cellY - 3) {
-			E1.cellY = start.cellX;
-			E2.cellY = start.cellX;
-			E1.cellX = start.cellY - 1;
-			E2.cellX = start.cellY - 2;
-		}
-		BS.coordinates.add(start);
-		BS.coordinates.add(E1);
-		BS.coordinates.add(E2);
-		BS.coordinates.add(end);
-		BS.length = 4;
-		ships.add(BS);
+	public void addShip(Ship s) {
+		ships.add(s);
 
 	}
-	// adds our 4-length ship (battleship) to the ship list of the fleet and adds
-	// the coordinates to the appropriate list
 
-	private void addACC(Coordinate start, Coordinate end) {
-		Ship ACC = new Ship();
-		ACC.color = Color.GREEN;
-		Coordinate E1 = new Coordinate(0, 0);
-		Coordinate E2 = new Coordinate(0, 0);
-		Coordinate E3 = new Coordinate(0, 0);
-		ACC.name = "Ally Aircraft Carrier";
-		if (start.cellX == end.cellX + 4) {
-			E1.cellX = start.cellY;
-			E2.cellX = start.cellY;
-			E3.cellX = start.cellY;
-			E1.cellY = start.cellX + 1;
-			E2.cellY = start.cellX + 2;
-			E3.cellY = start.cellX + 3;
-
-		} else if (start.cellY == end.cellY + 4) {
-			E1.cellY = start.cellX;
-			E2.cellY = start.cellX;
-			E3.cellY = start.cellX;
-			E1.cellX = start.cellY + 1;
-			E2.cellX = start.cellY + 2;
-			E3.cellX = start.cellY + 3;
-
-		} else if (start.cellX == end.cellX - 4) {
-			E1.cellX = start.cellY;
-			E2.cellX = start.cellY;
-			E3.cellX = start.cellY;
-			E1.cellY = start.cellX - 1;
-			E2.cellY = start.cellX - 2;
-			E3.cellY = start.cellX - 3;
-
-		} else if (start.cellY == end.cellY - 4) {
-			E1.cellY = start.cellX;
-			E2.cellY = start.cellX;
-			E3.cellY = start.cellX;
-			E1.cellX = start.cellY - 1;
-			E2.cellX = start.cellY - 2;
-			E2.cellX = start.cellY - 3;
-		}
-		ACC.coordinates.add(start);
-		ACC.coordinates.add(E1);
-		ACC.coordinates.add(E2);
-		ACC.coordinates.add(E3);
-		ACC.coordinates.add(end);
-		ACC.length = 5;
-		ships.add(ACC);
-	}
-	// adds our largest ship (Aircraft carrier) to the ship list of the fleet and
-	// adds the coordinates to the appropriate list
-
-	public void addFleet(Coordinate start, Coordinate end, int a) {
-		if (a == 0) {
-			addACC(start, end);
-		} else if (a == 1) {
-			addBS(start, end);
-		} else if (a == 2) {
-			addDS(start, end);
-		} else if (a == 3) {
-			addSM(start, end);
-		} else if (a == 4) {
-			addPB(start, end);
-		}
-	}
-
-	public void spawnFleet(int level, Fleet a) {
-		Ship EACC = new Ship(), EBS = new Ship(), EDS = new Ship(), ESM = new Ship(), EPB = new Ship();
-		EACC.name = "Enemy Aircraft Carrier";
-		EBS.name = "Enemy Battleship";
-		EDS.name = "Enemy Destroyer";
-		ESM.name = "Enemy Submarine";
-		EPB.name = "Enemy Patrol Boat";
-		EACC.length = 5;
-		EBS.length = 4;
-		EDS.length = 3;
-		ESM.length = 3;
-		EPB.length = 2;
+	public void spawnFleet(int level, Ship a, Ship b, Ship d, Ship s, Ship p) {
 		if (level == 0) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(6, 4 + i));
-			}
-
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(3 + i, 2));
-			}
-
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(2 + i, 4));
-			}
-
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(2, 8 - i));
-			}
-
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(8, 8 + i));
-			}
+			a.coordinateAdder(new Coordinate(6, 4), new Coordinate(6, 8), a);
+			b.coordinateAdder(new Coordinate(3, 2), new Coordinate(6, 4), b);
+			d.coordinateAdder(new Coordinate(2, 4), new Coordinate(4, 4), d);
+			s.coordinateAdder(new Coordinate(2, 8), new Coordinate(2, 6), s);
+			p.coordinateAdder(new Coordinate(8, 8), new Coordinate(8, 9), p);
 
 		} else if (level == 1) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(0 + i, 0));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(0, 1 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(3 + i, 7));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(8, 2 + i));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(1, 6 + i));
-			}
+			a.coordinateAdder(new Coordinate(0, 0), new Coordinate(4, 9), a);
+			b.coordinateAdder(new Coordinate(0, 1), new Coordinate(0, 4), b);
+			d.coordinateAdder(new Coordinate(3, 7), new Coordinate(5, 7), d);
+			s.coordinateAdder(new Coordinate(8, 2), new Coordinate(8, 4), s);
+			p.coordinateAdder(new Coordinate(1, 6), new Coordinate(1, 7), p);
 
 		} else if (level == 2) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(3 + i, 2));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(8, 4 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(2, 4 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(7, 7 + i));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(1, 0 + i));
-			}
+			a.coordinateAdder(new Coordinate(3, 2), new Coordinate(7, 2), a);
+			b.coordinateAdder(new Coordinate(8, 4), new Coordinate(8, 7), b);
+			d.coordinateAdder(new Coordinate(2, 4), new Coordinate(2, 6), d);
+			s.coordinateAdder(new Coordinate(7, 7), new Coordinate(7, 9), s);
+			p.coordinateAdder(new Coordinate(1, 0), new Coordinate(1, 1), p);
+		}
 
-		} else if (level == 3) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(5 + i, 9));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(5 + i, 2));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(2, 4 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(3 + i, 7));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(5 + i, 5));
-			}
+		else if (level == 3) {
+			a.coordinateAdder(new Coordinate(5, 9), new Coordinate(9, 9), a);
+			b.coordinateAdder(new Coordinate(5, 2), new Coordinate(8, 2), b);
+			d.coordinateAdder(new Coordinate(2, 4), new Coordinate(2, 6), d);
+			s.coordinateAdder(new Coordinate(3, 7), new Coordinate(5, 7), s);
+			p.coordinateAdder(new Coordinate(5, 5), new Coordinate(6, 5), p);
 
 		} else if (level == 4) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(3 + i, 7));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(3, 2 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(9, 1 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(0, 7 + i));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(5 + i, 1));
-			}
+			a.coordinateAdder(new Coordinate(3, 7), new Coordinate(7, 7), a);
+			b.coordinateAdder(new Coordinate(3, 2), new Coordinate(3, 5), b);
+			d.coordinateAdder(new Coordinate(9, 1), new Coordinate(9, 3), d);
+			s.coordinateAdder(new Coordinate(0, 7), new Coordinate(0, 9), s);
+			p.coordinateAdder(new Coordinate(5, 1), new Coordinate(6, 1), p);
 
 		} else if (level == 5) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(1, 2 + i));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(4, 5 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(3 + i, 2));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(8, 3 + i));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(7, 0 + i));
-			}
+			a.coordinateAdder(new Coordinate(1, 2), new Coordinate(1, 6), a);
+			b.coordinateAdder(new Coordinate(4, 5), new Coordinate(4, 8), b);
+			d.coordinateAdder(new Coordinate(3, 2), new Coordinate(5, 2), d);
+			s.coordinateAdder(new Coordinate(8, 3), new Coordinate(8, 5), s);
+			p.coordinateAdder(new Coordinate(7, 0), new Coordinate(7, 1), p);
 
 		} else if (level == 6) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(5 + i, 3));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(6, 6 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(1, 1 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(2 + i, 6));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(8 + i, 8));
-			}
+			a.coordinateAdder(new Coordinate(5, 3), new Coordinate(9, 3), a);
+			b.coordinateAdder(new Coordinate(6, 6), new Coordinate(6, 9), b);
+			d.coordinateAdder(new Coordinate(1, 1), new Coordinate(1, 3), d);
+			s.coordinateAdder(new Coordinate(2, 6), new Coordinate(4, 6), s);
+			p.coordinateAdder(new Coordinate(8, 8), new Coordinate(9, 8), p);
 
 		} else if (level == 7) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(4 + i, 5));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(4, 0 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(1 + i, 4));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(5, 7 + i));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(2 + i, 8));
-			}
+			a.coordinateAdder(new Coordinate(4, 5), new Coordinate(8, 5), a);
+			b.coordinateAdder(new Coordinate(4, 0), new Coordinate(4, 3), b);
+			d.coordinateAdder(new Coordinate(1, 4), new Coordinate(3, 4), d);
+			s.coordinateAdder(new Coordinate(5, 7), new Coordinate(5, 9), s);
+			p.coordinateAdder(new Coordinate(2, 8), new Coordinate(3, 8), p);
 
 		} else if (level == 8) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(2, 2 + i));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(5 + i, 5));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(8, 1 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(0 + i, 0));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(6, 0 + i));
-			}
+			a.coordinateAdder(new Coordinate(2, 2), new Coordinate(2, 6), a);
+			b.coordinateAdder(new Coordinate(5, 5), new Coordinate(8, 5), b);
+			d.coordinateAdder(new Coordinate(8, 1), new Coordinate(8, 3), d);
+			s.coordinateAdder(new Coordinate(0, 0), new Coordinate(2, 0), s);
+			p.coordinateAdder(new Coordinate(6, 0), new Coordinate(6, 1), p);
 
 		} else if (level == 9) {
-			for (int i = 0; i < 5; i++) {
-				EACC.coordinates.add(new Coordinate(2 + i, 9));
-			}
-			for (int i = 0; i < 4; i++) {
-				EBS.coordinates.add(new Coordinate(8, 5 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				EDS.coordinates.add(new Coordinate(2, 5 + i));
-			}
-			for (int i = 0; i < 3; i++) {
-				ESM.coordinates.add(new Coordinate(1 + i, 1));
-			}
-			for (int i = 0; i < 2; i++) {
-				EPB.coordinates.add(new Coordinate(4, 4 + i));
-			}
+			a.coordinateAdder(new Coordinate(2, 9), new Coordinate(6, 9), a);
+			b.coordinateAdder(new Coordinate(8, 5), new Coordinate(8, 8), b);
+			d.coordinateAdder(new Coordinate(2, 5), new Coordinate(2, 7), d);
+			s.coordinateAdder(new Coordinate(1, 1), new Coordinate(3, 1), s);
+			p.coordinateAdder(new Coordinate(4, 4), new Coordinate(4, 5), p);
 
 		}
-		a.ships.add(EACC);
-		a.ships.add(EBS);
-		a.ships.add(EDS);
-		a.ships.add(ESM);
-		a.ships.add(EPB);
+		ships.add(a);
+		ships.add(b);
+		ships.add(d);
+		ships.add(s);
+		ships.add(p);
 
 	}
-	// The Spawn methods are the randomized counterpart to the Add methods. It
-	// determines a random starting point and determines whether the ship will be
-	// placed horizontally or vertically. Then it determines the rest of the ships
-	// location based on these parameters. Finally it adds these to the correct
-	// list. The SpawnFleet method allows to generate the entire enemy fleet with
-	// one method.
+// The Spawn methods are the randomized counterpart to the Add methods. It
+// determines a random starting point and determines whether the ship will be
+// placed horizontally or vertically. Then it determines the rest of the ships
+// location based on these parameters. Finally it adds these to the correct
+// list. The SpawnFleet method allows to generate the entire enemy fleet with
+// one method.
 }

@@ -3,14 +3,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 
 import java.util.Date;
@@ -63,11 +57,19 @@ public class SqlConnect {
 
 	public static void saveScore(String player, int myScore, int enemyScore, String status) {
 		PreparedStatement ps;
+		int length = 0;
 		try {
+			ps = con.prepareStatement("SELECT * FROM HighScores");
+			ps.execute();
+			ResultSet resultset = ps.getResultSet();
+			while (resultset.next()) {
+				length++;
+
+			}
 			ps = con.prepareStatement(
 					"INSERT INTO HighScores (id, player, Achieved, shotsLanded, enemyShotsLanded, Status) VALUES "
-							+ "('" + player + "," + dateformat.format(date) + "," + myScore + "," + enemyScore + ","
-							+ status + "')");
+							+ "('" + length + 1 + "," + player + "," + dateformat.format(date) + "," + myScore + ","
+							+ enemyScore + "," + status + "')");
 
 			ps.execute();
 		} catch (SQLException e) {
