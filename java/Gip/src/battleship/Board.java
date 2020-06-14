@@ -14,7 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * This class serves to set up the board, and to operate the game once it begins
@@ -302,7 +304,9 @@ public class Board extends JPanel {
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		JScrollPane score = new JScrollPane();
+		JTable table = new JTable();
+		JScrollPane score = new JScrollPane(table);
+		table.setModel(SqlConnect.highScore());
 		panel.add(score);
 		frame.setVisible(true);
 	}

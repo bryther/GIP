@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
 
 import java.util.Date;
 
@@ -38,18 +39,23 @@ public class SqlConnect {
 		}
 	}
 
-	public static JList<String> highScore() {
+	public static DefaultTableModel highScore() {
 		PreparedStatement ps;
-		DefaultListModel<String> model = new DefaultListModel<>();
+		DefaultTableModel model = new DefaultTableModel(new String[] { "Class Name", "Home work", "Due Date" }, 0);
+		// DefaultListModel<String> model = new DefaultListModel<>();
 		try {
 			ps = con.prepareStatement("SELECT * FROM HighScores");
 			ps.execute();
 			ResultSet resultset = ps.getResultSet();
-			JList<String> resultlist = new JList<>(model);
 			while (resultset.next()) {
-				resultlist.addElement(resultset.getString("vraag"));
+				String a = resultset.getString("player");
+				String b = resultset.getString("Achieved");
+				String c = resultset.getString("shotsLanded");
+				String d = resultset.getString("enemyShotsLanded");
+				String e = resultset.getString("Status");
+				model.addRow(new Object[] { a, b, c, d, e });
 			}
-			return resultlist;
+			return model;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
